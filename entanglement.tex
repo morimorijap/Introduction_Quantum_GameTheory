@@ -1,0 +1,74 @@
+\section{Entanglement エンタングルメント}
+
+ヒルベルト空間$\mathbf{H}$のベクトル$\ket{\psi}$を検討してきました。ベクトルまたは状態$\ket{\psi}$は、ヒルベルト空間の特定のテンソル積分解に対して因数分解されない場合、エンタングルメント（絡み合い）します。$ \mathbf{H} =\mathbf{H}_  \otimes \mathbf{H}_2$。 たとえば、状態$\ket{\psi_1} = a \ket{00} + b \ket{01}$は次のようにテンソル積に分解できます。
+
+\begin{equation}
+\label{124}
+\ket{\psi_1}
+=
+a \ket{00} + b \ket{01} 
+=
+\ket{0} \otimes (a\ket{0} + b \ket{1}), 
+\end{equation}
+
+そうこれはエンタングルメントしない。 一方、状態$\ket{\psi_2} = a \ket{00} + b \ket{11}$はテンソル積に分解できないため、絡み合っています。 絡み合った状態は、空間や時間に関係なく、単一の全体として機能します。 1つのエンタングルされたキュービットに対して実行される操作は、エンタングルされたキュービットの状態に即座に影響します。 エンタングルメントは「離れた場所での不気味な行動」を生み出します。
+
+ヒルベルト空間に使用してきた正規直交計算基底の代わりに、ベル基底と呼ばれる別の正規直交基底が使用されることがあります。 ベル基底は、最大に絡み合った状態のセットです。 $\mathbf{H}_4$の2量子ビットの場合、この絡み合った基底を次のように表すことができます。
+
+
+\begin{equation}
+\label{125}
+\ket{b_0} 
+= \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})
+\end{equation}
+
+\begin{equation}
+\label{126}
+\ket{b_1} = \frac{1}{\sqrt{2}}(\ket{01} + \ket{10})
+\end{equation}
+
+\begin{equation}
+\label{127}
+\ket{b_2} = \frac{1}{\sqrt{2}}(\ket{00} - \ket{11})
+\end{equation}
+
+\begin{equation}
+\label{128}
+\ket{b_3} = \frac{1}{\sqrt{2}}(\ket{01} - \ket{10}).
+\end{equation}
+
+アダマール変換Hとc-NOTゲートの組み合わせを使用することにより、計算基底をベル基底に変換するのは簡単です。 まず、アダマール変換を左端のキュービットに適用します。 次に、左キュービットをソースとして、右キュービットをターゲットとしてc-NOT（式69を確認）を適用します。 この変換の省略形は$\lnot (H \otimes 1 )$です。
+
+\begin{equation}
+\label{129}
+\lnot (H \otimes  \mathbf{1} ) \ket{00}
+\to
+\lnot \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) \ket{0}
+\to \ket{b_0}
+\end{equation}
+
+\begin{equation}
+\label{130}
+\lnot (H \otimes \mathbf{1} ) \ket{01}
+\to
+\lnot \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) \ket{1}
+\to \ket{b_1}
+\end{equation}
+
+\begin{equation}
+\label{131}
+\lnot (H \otimes  \mathbf{1} ) \ket{10}
+\to
+\lnot \frac{1}{\sqrt{2}}(\ket{0} - \ket{1}) \ket{0}
+\to \ket{b_2}
+\end{equation}
+
+\begin{equation}
+\label{132}
+\lnot (H \otimes  \mathbf{1} ) \ket{11}
+\to
+\lnot \frac{1}{\sqrt{2}}(\ket{0} - \ket{1}) \ket{1}
+\to \ket{b_3}.
+\end{equation}
+
+ここで、量子もつれがどのようにして囚人のジレンマからプレイヤーを解放できるかを示します。

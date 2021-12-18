@@ -1,0 +1,120 @@
+\section{Battle of the sexes game: a quantum game with entanglement.男女の戦いゲーム：絡み合いのある量子ゲーム}
+
+いわゆる「男女の戦い」ゲームは、実際には戦いではありません。それは、相反する価値観を持つラブフェストです。
+アリスとボブは一緒に夜を過ごしたいと思っています、そして彼らがそれを別々に過ごすならば、彼らのそれぞれの見返りは$\{ \gamma,\gamma \}$です。
+いつものように、アリスのペイオフが最初にリストされ、ボブのペイオフが2番目にリストされます。
+アリスは夜をオペラ座で過ごすことを好み（O）、ボブは夜をテレビを見ることを好みます（T）。
+オペラでの両方のペイオフは$\{ \alpha, \beta \}$ですが、テレビを見ている両方のペイオフは${\beta, \alpha}$です。
+$\alpha > \beta > \gamma$と仮定します。
+アリスとボブはどちらもそれぞれの仕事で働いており、通信できません（携帯電話はありません）。
+それぞれがオペラかボブのテレビの家に現れる予定で、その場所でお互いに会うことを望んでいます。
+したがって、それぞれの動きは、セット${O,T}$のメンバーです。 ゲームを表9に示します。
+
+表を調べると、移動中の2つのナッシュ均衡 $(O,O)$と$(T,T)$がわかります。 これらの均衡のいずれかからいずれかのプレーヤーが一方的に逸脱すると、見返りが少なくなります。 しかし···、アリスの各行とボブの各列にはナッシュ均衡があります。 では、どちらのプレイヤーが何をすべきかをどのように決定するのでしょうか？
+
+さらに、混合戦略には、アリスが確率$p$で$O$をプレイし、確率$1 - p$で$T$をプレイする一方で、ボブが確率$q$で$O$をプレイし、確率$1 − q$で$T$をプレイすることから生じる、3番目の隠れたナッシュ均衡があります。 $0$でも$1$でもありません。\\
+
+\begin{table}[htb]
+\caption{男女の戦い$(\alpha > \beta > \gamma)$}
+\centering
+\begin{tabular}{|r|r|r|} \hline
+ & Bob $O$ & Bob $T$ \\ \hline
+Alice $O$ & $(\alpha,\beta)$ & $(\gamma,\gamma)$   \\
+Alice $T$ & $(\gamma,\gamma)$ & $(\beta, \alpha)$ \\ \hline
+\end{tabular}
+\end{table} 
+
+% 表IX：男女の戦い$(\alpha > \beta > \gamma)$ \\
+
+
+計算では、$p = \frac{\alpha - \gamma}{\alpha + \beta -2 \gamma}, \frac{\beta - \gamma}{\alpha + \beta -2 \gamma}  $が示されています。 これらの確率は、アリスとボブに期待される見返りを与えます。
+
+\begin{equation}
+\label{156}
+\bar{\pi}_A (p, q ) 
+=
+\bar{\pi}_B (p, q)
+=
+\frac{\alpha \beta - \gamma^2}{\alpha + \beta - 2 \gamma}.
+\end{equation}
+
+表9に示されているコーナーのナッシュ均衡では、アリスまたはボブの一方が$\alpha$のペイオフを受け取り、もう一方が$\beta$のペイオフを受け取ります。 しかし$\alpha > \beta > \bar{\pi}_A(p,q)$。 したがって、アリスとボブの両方が3番目のナッシュ均衡で悪化します。
+
+この3番目のナッシュ均衡を見つけるために、最初に、アリスとボブの各動きの想定される確率を考慮して、アリスの期待される見返りを記述します。
+
+\begin{equation}
+\label{157}
+\bar{\pi}_A
+= pq \alpha + p(1-q) \gamma + (1-p)q \gamma + (1-p)(1-q) \beta.
+\end{equation}
+
+次に、pを最大化して、
+
+\begin{equation}
+\label{158}
+\frac{\partial \bar{\pi}_A}{\partial p}
+= q \alpha + (1-q) \gamma -q \gamma - (1-q) \beta =0.
+\end{equation}
+
+後者の方程式を$q$について解くと、$q = \beta - \gamma$になります。 ボブの予想ペイオフを最大化する同様の計算により、$p$が得られます。
+
+量子戦略では、どのように物事を変えるのですか？ $\ket{O} \to \ket{0} $と$ \ket{T} \to \ket{1}$をマッピングし、ユニタリ行列Uを適用して状態をエンタングルしましょう。
+
+\begin{equation}
+\label{159}
+U=
+\frac{1}{\sqrt{2}} (\mathbf{1}^{\otimes 2} + i \sigma_x^{\otimes 2}),
+\end{equation}
+
+初期状態$\ket{00}$に。 次に、$U$を最初に適用した後、システム状態は次のようになります。
+
+\begin{equation}
+\label{160}
+U \ket{00} =
+\frac{1}{\sqrt{2}} ( \ket{00} + i \ket{11}),
+\end{equation}
+
+従来通り。 アリスとボブはどちらもUと初期状態$\ket{00}$を知っています。
+
+アリスとボブが戦略セット$S = \{1, \sigma_x, H, \sigma_z \}$から移動できるようにします。
+それらの個々のキュービット。 次に、結果に$U^\dagger$を適用します。 最終的な状態は、囚人のジレンマで以前に計算された状態ですが、次の表10に示すように、期待されるペイオフは異なります。
+
+左上のエントリは、古典的なゲームが量子ゲームに含まれていることを示しています。
+表の唯一のナッシュ均衡は、$(\sigma_x, \sigma_x)$に対応する$(\beta, \alpha)$です。
+アリスとボブは一緒にテレビを見ながら夜を過ごします。アリスのペイオフはボブの$\alpha$のペイオフよりも$\beta$だけ少なくなっています。
+$(\sigma_x, \sigma_x)$では、アリスもボブも一方的にペイオフを増やすことはできません。また、このペイオフのセットは別のペイオフのセットによって共同で支配されないため、パレート最適でもあります。これこそテレビのルールですね！
+
+\begin{table}[htb]
+\caption{量子移動を伴う男女ゲームの戦い。 ナッシュ均衡は$(\sigma_x, \sigma_x)$に対応する$(\alpha, \beta)$です。 アリスとボブは夜をテレビを見ながら過ごします。}
+\centering
+\begin{tabular}{|r|r|r|r|r|} \hline
+ & Bob $\mathbf{1}$ & Bob $\sigma_x$  & Bob H & Bob $\sigma_z$ \\ \hline
+Alice $\mathbf{1}$ & $(\alpha,\beta)$ & $(\gamma,\gamma)$ & $(\frac{\beta + \gamma}{2}, \frac{\alpha + \gamma}{2})$  & $(\beta, \alpha)$  \\
+Alice $\sigma_x$ & $(\gamma,\gamma)$ & $(\beta, \alpha)$ & $(\frac{\beta + \gamma}{2}, \frac{\alpha + \gamma}{2})$  & $(\gamma, \gamma)$  \\
+Alice $H$ & $(\frac{\beta + \gamma}{2}, \frac{\alpha + \gamma}{2})$ & $(\frac{\beta + \gamma}{2}, \frac{\alpha + \gamma}{2})$ & $(\frac{\alpha + \beta + 2 \gamma}{4}, \frac{\alpha + \beta + 2 \gamma}{4})$  & $(\frac{\beta + \gamma}{2}, \frac{\alpha + \gamma}{2})$  \\
+Alice $\sigma_z$ & $(\beta, \alpha)$ & $(\gamma,\gamma)$ & $(\frac{\alpha + \gamma}{2}, \frac{\beta + \gamma}{2})$  & $(\alpha, \beta)$  \\ \hline
+\end{tabular}
+\end{table} 
+
+% 表X：量子移動を伴う男女ゲームの戦い。 ナッシュ均衡は$(\sigma_x, \sigma_x)$に対応する$(\alpha, \beta)$です。 アリスとボブは夜をテレビを見ながら過ごします。\\
+
+
+混合戦略を検討することは残っています。 表の四隅のペイオフが凸集合の極値であることは明らかです。 したがって、$\mathbf{1}$と$\sigma_z$の凸結合を考慮するだけで済みます。 アリスの期待される見返りは次の形をとります。
+
+\begin{equation}
+\label{161}
+\bar{\pi}_A
+= pq \alpha + p(1-q) \beta + (1-p)q \beta + (1-p)(1-q) \alpha.
+\end{equation}
+
+pで最大化、
+
+\begin{equation}
+\label{162}
+\frac{ \partial \bar{\pi}_A}{ \partial p}
+= q \alpha + (1-q) \beta - q \beta - (1-q) \alpha.
+\end{equation}
+
+$q$を解くと$q = \frac{1}{2}$ になります。同様に、$p = \frac{1}{2} $です。混合戦略$ ( \frac{1}{2} \mathbf{1} + \frac{1}{2} \sigma_z, \frac{1}{2} \mathbf{1} + \frac{1}{2} \sigma_z $は$ ( \frac{\alpha + \beta }{2}, \frac{\alpha + \beta }{2} ) $のペイオフをもたらします。 ついにボブとアリスの平等！ このナッシュ均衡は、$(\alpha, \beta)$または$(\beta, \alpha)$のいずれかによって共同で支配されていないため、パレート最適でもあります。
+
+

@@ -1,0 +1,129 @@
+\section{Newcomb’s Game: a game against a Superior Being:Newcombのゲーム:優れた存在との戦い}
+
+アリスは、優れた存在（Superior Being: SB）に対して次のゲームをプレイします。 SBは、神、別の惑星からの優れた知性、またはアリスの思考プロセスを予測するのに非常に優れたスーパーコンピューターと考えることができます(参考文献4)。
+ボックス$B_1$と$B_2$が2つあります。 $B_1$には1000ドルが含まれています。 $B_2$には、SBがボックスに入れた金額に応じて、1,000,000ドルまたは0ドルのいずれかが含まれます。 アリスは、両方のボックスを使用するか、B2のみを使用するかを選択できます。
+
+SBがアリスが両方のボックスを選択すると予測した場合、SBは$B_2$に0ドルを入れ、SBがアリスがボックス$B_2$のみを受け取ると予測した場合、SBは$B_2$に1,000,000ドルを入れます。
+
+ゲームは表11に示されています。 2行目の各ペイオフは、1行目の対応するペイオフよりも大きいため、アリスには明らかに支配的な戦略があります。これは、両方のボックスを使用することです。
+
+一方、支配戦略は期待効用理論と矛盾します（ここでは効用はペイオフで線形であると見なされます）。
+
+
+\begin{table}[htb]
+\caption{Newcombのゲーム}
+\centering
+\begin{tabular}{|r|r|r|} \hline
+ & SB predicts Alice will take only box $B_2$ & SB predicts Alice will take both boxes \\ \hline
+Alice takes only box $B_2$ & 1,000,000ドル & 0ドル  \\
+Alice takes both boxes & 1,001,000ドル & 1,000ドル  \\ \hline
+\end{tabular}
+\end{table} 
+% 表XI：Newcombのゲーム \\
+
+SBの予測精度が$p$であると仮定します。 次に、期待効用理論によれば、アリスは両方のボックスを使用するか、$B_2$のみを使用するかを区別しません。
+
+\begin{equation}
+\label{163}
+p \ \$ 1,000,000+(1− p) \ \$ 0 = (1− p) \ \$ 1,001,000+ p \ \$ 1000.
+\end{equation}
+
+$p > .5005$の場合、アリスはボックス$B_2$のみを使用する戦略を好み、支配戦略と矛盾します。 このジレンマを解決するにはさまざまな方法があります（参考文献４）。
+たとえば、SBが全知である場合$(p=1)$、テーブルには1000ドルと1,000,000ドルの2つのエントリしかありません。
+したがって、オートマトンのアリスはSBが予測したものを選択し、パラドックスは解決されます。
+
+しかし、ここでは量子ゲームに興味があります（参考文献58）。
+SBは、宇宙が古典物理学ではなく、量子物理学に基づいていることを確かに知っています。古典物理学は、高さが約2メートルの存在の偏った見方にすぎません。
+量子ニューコムのゲームはヒルベルト空間$\mathbf{H}_1 \otimes \mathbf{H}_2 $で行われ、これを2キュービット空間とします。左キュービットはアリスのアクションを示し、右キュービットはSBのアクションを示します。
+  SBの場合、$\ket{0}$はボックス$B_2$への1,000,000ドルの配置を表し、$\ket{1}$は$B_2$への0ドルの配置を表します。 アリスの場合、$\ket{0}$は$B_2$のみを取得することを表し、$\ket{1}$は両方のボックスを取得することを表します。
+$\mathbf{H}_1 \otimes \mathbf{H}_2 $の基底ベクトルは$\ket{00},\ket{01},\ket{10}, \ket{11}$であり、表11のペイオフ状態に対応します。
+
+ゲームの初期状態は、SBがボックス$B_2$に1,000,000ドルを入れた場合は$ \Lambda = \ket{00}$、SBが$B_2$に何も入れなかった場合は$ \Lambda = \ket{11} $です。 ゲームの流れは以下の通りです。
+
+ステップ1：SBは、$\ket{0}$または$\ket{1}$の選択を行います。 一度行うと、この選択を変更することはできません。
+
+ステップ2：SBは、アダマール行列$H$をアリスのキュービットに適用します。 つまり、演算子$ H \otimes \mathbf{1} $から初期状態$\Lambda$になります。
+
+ステップ3：アリスは、確率$w$のスピンフリップ演算子$ \sigma_x \otimes \mathbf{1}$ または確率$1 − w $の単位行列$\mathbf{1} \otimes \mathbf{1}$をゲームの現在の状態に適用します。 （これらは彼女自身のキュービットでのみ動作します。）
+
+ステップ4：SBは$ H \otimes \mathbf{1}$をゲームの現在の状態に適用し、アリスへのペイオフが決定されます。
+
+SBが$\ket{0}$を選択した場合、ゲームの手順の順序は次のようになります。
+
+
+\begin{equation}
+\label{164}
+(H \otimes \mathbf{1}) \ket{00}
+\to
+\frac{1}{\sqrt{2}}
+(\ket{00} + \ket{10})
+\end{equation}
+
+\begin{equation}
+\label{165}
+w(\sigma_x \otimes \mathbf{1})
+(H \otimes \mathbf{1}) \ket{00}
+\to
+\frac{w}{\sqrt{2}}
+(\ket{00} + \ket{10})
+\end{equation}
+
+\begin{equation}
+\label{166}
+\Rightarrow
+(w( \sigma_x \otimes \mathbf{1}) + (1 - w)
+(\mathbf{1} \otimes \mathbf{1}))(H \otimes \mathbf{1}) \ket{00}
+\to
+\frac{1}{\sqrt{2}}
+(\ket{00} + \ket{11})
+\end{equation}
+
+\begin{equation}
+\label{167}
+( H  \otimes \mathbf{1})(w(\sigma_x \otimes \mathbf{1})) 
+(1 - w)(\mathbf{1} \otimes \mathbf{1}))(H \otimes \mathbf{1}) \ket{00}
+\to
+\ket{00}.
+\end{equation}
+
+
+したがって、アリスはボックス$B_0$のみを受け取り、1,000,000ドルを受け取ります。 SBはアリスの動きを正しく予測しました。
+
+SBが$\ket{1}$を選択した場合、ゲームの手順の順序は次のようになります。
+
+\begin{equation}
+\label{168}
+(H \otimes \mathbf{1}) \ket{11}
+\to
+\frac{1}{\sqrt{2}}
+(\ket{01} - \ket{11})
+\end{equation}
+
+\begin{equation}
+\label{169}
+w(\sigma_x \otimes \mathbf{1})
+(H \otimes \mathbf{1}) \ket{11}
+\to
+\frac{w}{\sqrt{2}}
+(\ket{11} - \ket{01})
+\end{equation}
+
+\begin{equation}
+\label{170}
+\Rightarrow
+(w( \sigma_x \otimes \mathbf{1}) + (1 - w)
+(\mathbf{1} \otimes \mathbf{1}))(H \otimes \mathbf{1}) \ket{11}
+\to
+\frac{1 - 2w}{\sqrt{2}}
+(\ket{01} - \ket{11})
+\end{equation}
+
+\begin{equation}
+\label{171}
+( H  \otimes \mathbf{1})(w(\sigma_x \otimes \mathbf{1})) 
+(1 - w)(\mathbf{1} \otimes \mathbf{1}))(H \otimes \mathbf{1}) \ket{11}
+\to
+(1-2w)\ket{11}.
+\end{equation}
+
+最終的な値は、$w = 0$のときに最大になります。したがって、アリスは両方のボックスを受け取り、1,000ドルを受け取ります。 SBは再びアリスの動きを完全に予測しました。 SBは、この結果を達成するためにオミサイエンスを必要とせず、量子力学の知識のみを必要としました。 ゲームの初期状態にアダマール行列（量子フーリエ変換）を適用することにより、SBはアリスにSBの予測を確認するような振る舞いをさせるように誘導しました。

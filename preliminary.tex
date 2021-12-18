@@ -1,0 +1,151 @@
+\section{Preliminary mathematical pieces:準備のための数学}
+
+ゲームを定義する前に、その例を示します。次のセクションのスピンフリップゲームでは、従来のゲーム理論と量子ゲーム理論の違いのいくつかを取り上げます。
+スピンフリップゲームがどのように機能するかを説明するために、$2 \times 1$のベクトルと$2 \times 2$の行列を含むいくつかの控えめな数学の予備知識が必要になります。
+
+次の単純なベクトルは、私たちの目的に非常に役立つことがわかります。
+
+\begin{eqnarray}
+\label{9}
+u = \left(  
+\begin{array}{ccc}
+ 1 \\
+ 0 
+\end{array}
+\right) 
+,
+d = \left(  
+\begin{array}{ccc}
+ 0 \\
+ 1 
+\end{array}
+\right).
+\end{eqnarray}
+
+もちろん、これらは2次元（複素）空間の基底ベクトルです。任意の点を$au + bd$の形式で表現できるためです。
+(ここで、一般に、$a$と$b$は複素数スカラー、$a,b \in \mathbf{C}$であると想定されます。)
+ただし、$u$と$d$は、ジオメトリの外側にある多くの「スペース」または状態を表すこともできます。
+
+YesまたはNoの応答、電子のスピン状態のアップまたはダウン（スピンはz方向で測定）、確率シーケンスのヘッドまたはテール、入札プロセスまたは電子デバイスの成功または失敗など。
+ $u$または$d$の選択は、ゲーム内のプレーヤーの動きを表すこともでき、そのような動きのシーケンスを2進数のビットまたは量子等価のキュービットで表すことができます。
+ビットとキュービットは、ビット$b$が単一の数値であるという事実によって異なります
+, $b \in {0,1}$, キュービットqは2次元ヒルベルト空間のベクトル$q \in {au + bd}$です。(後でディラック記法を紹介します $\ket{0},\ket{1}$そしてそしてこのエッセイには $ u \leftrightarrow \ket{u} \leftrightarrow \left(  
+\begin{array}{ccc}
+ 1 \\
+ 0 
+\end{array}
+\right) \leftrightarrow \ket{0} \leftrightarrow bit \ 0 $のような対応があります。また、同じように$d$には,
+$ d \leftrightarrow \ket{d} \leftrightarrow \left(  
+\begin{array}{ccc}
+ 0 \\
+ 1 
+\end{array}
+\right) \leftrightarrow \ket{1} \leftrightarrow bit \ 1 $)
+
+たとえば、これから何が起こるかを予見するために、
+5量子ビットのレジスタまたはシーケンス$\ket{10011}$は、ベクトルのテンソル積と19$(= 2^4 + 2^1 + 2^0)$の数を表すことができます。
+
+\begin{eqnarray}
+\label{10}
+\ket{10011} = 
+\left( \begin{array}{ccc}
+ 0 \\
+ 1 
+\end{array} \right) 
+\otimes
+\left( \begin{array}{ccc}
+ 1 \\
+ 0 
+\end{array} \right)
+\otimes
+\left( \begin{array}{ccc}
+ 1 \\
+ 0 
+\end{array} \right)
+\otimes
+\left( \begin{array}{ccc}
+ 0 \\
+ 1 
+\end{array} \right)
+\otimes
+\left( \begin{array}{ccc}
+ 0 \\
+ 1 
+\end{array} \right)
+\end{eqnarray}
+
+$= (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0)^T$
+後者のベクトルでは、最初のスロットを0からカウントを開始するため、1は19番目ではなく20番目のスロットにあります。 同じシーケンスが不明瞭に書かれている可能性もあります。）
+
+次に、ある状態を別の状態に変換（移転）する方法が必要です。 2状態系の場合、パウリスピン行列を使用してこれを行うと便利です。 3つの2×2パウリスピン行列は次のとおりです。
+
+\begin{eqnarray}
+\label{11}
+\sigma_x = 
+\left( \begin{array}{ccc}
+ 0 & 1 \\
+ 1 & 0
+\end{array} \right) 
+,
+\sigma_y = 
+\left( \begin{array}{ccc}
+ 0 & -i \\
+ i & 0
+\end{array} \right)
+,
+\sigma_z
+\left( \begin{array}{ccc}
+ 1 & 0\\
+ 0 & -1
+\end{array} \right)
+.
+\end{eqnarray}
+これらの3つの行列は、次の単位行列$\mathbf{1}$とともに
+\begin{eqnarray}
+\label{12}
+\mathbf{1} = 
+\left( \begin{array}{ccc}
+ 0 & 1 \\
+ 1 & 0
+\end{array} \right) 
+,
+\end{eqnarray}
+
+スパン2×2エルミート行列空間（エルミート行列には実数の対角要素と、互いに複素共役である鏡像の非対角要素があることを思い出してください）
+各スピン行列は、基本状態uとdに単純な影響を及ぼします。 特に、
+\begin{eqnarray}
+\label{13}
+\mathbf{1} u = u, 
+\mathbf{1} d = d 
+\end{eqnarray}
+
+\begin{eqnarray}
+\label{14}
+\sigma_x u = d, 
+\sigma_x d = u
+\end{eqnarray}
+
+\begin{eqnarray}
+\label{15}
+\sigma_z u = u, 
+\sigma_z d = - d
+\end{eqnarray}
+ 
+表1は、パウリスピン行列のいくつかの行列プロパティをまとめたものです。
+
+\begin{table}
+\label{t1}
+\caption{パウリスピン行列}
+\centering
+\begin{tabular}{|c|} \hline
+$\sigma_x^2 = \mathbf{1} $ \\ 
+$\sigma_y^2 = \mathbf{1} $ \\
+$\sigma_x^2 = \mathbf{1} $\\
+$\sigma_x \sigma_y = - \sigma_y \sigma_x = i \sigma_z$ \\
+$\sigma_y \sigma_z = - \sigma_z \sigma_y = i \sigma_x$ \\
+$\sigma_z \sigma_x = - \sigma_x \sigma_z = i \sigma_y$ \\ \hline
+\end{tabular}
+\end{table}
+
+
+

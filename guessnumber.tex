@@ -1,0 +1,947 @@
+\section{Guess a number games:ナンバーゲームを推測する}
+
+ナンバーゲームを推測するために、最初に、キュービット、ウォルシュ-アダマール変換（アダマール変換のnビットアナログ）、グローバー検索アルゴリズムのいくつかの要素など、いくつかの概念を紹介する必要があります(参考文献28)。 グローバー検索アルゴリズムは、量子計算の基本的な手法の1つであるため、量子ゲーム理論に現れるのは当然のことです。
+
+\textbf{Diracのブラ-ケット記法}。便宜上、uとdの指定を、各2×1ベクトルとその1×2複素共役転置を表す形式に変更します。
+
+\begin{equation}
+\label{35}
+\ket{u} =
+\begin{pmatrix}
+1 \\
+0  \\
+\end{pmatrix}
+,
+\bra{u} = (1, 0)
+,
+\ 
+\ket{d} =
+\begin{pmatrix}
+0 \\
+1  \\
+\end{pmatrix}
+,
+\bra{d} = (0, 1).
+\end{equation}
+
+次の場合に注意してください。
+$\ket{x} =
+\begin{pmatrix}
+1 \\
+-i  \\
+\end{pmatrix} $
+そして、
+$\bra{x} = (1, i)$です。
+
+これはディラックブラケット記法です。ここで$\bra{x}$はブラ、$\ket{x}$はケットです。
+ブラは水平で、ケッツは垂直です。 次に、$\ket{u} \bra{d}$の形式を使用できることに注意してください。
+
+\begin{equation}
+\label{36}
+\ket{u} \bra{d} =
+\begin{pmatrix}
+1 \\
+0  \\
+\end{pmatrix}
+(0, 1)
+=
+\begin{pmatrix}
+0 & 1\\
+0 & 0  \\
+\end{pmatrix}
+\end{equation}
+
+ここで$\ket{u} \bra{d}$は、$\ket{d}$を$\ket{u}$に変えます。 つまり、$\ket{u} \braket{d|d} = \ket{u}$で、 そして$\ket{u}$を$2×1$のゼロベクトルに、$\ket{u} \braket{d|u} =
+\begin{pmatrix}
+0 \\
+0  \\
+\end{pmatrix} $に変換します。
+
+
+\textbf{量子ビットについて}。 $n$ビットの$2$進数$x$を考えてみましょう。
+
+\begin{equation}
+\label{37}
+x = b_{n-1}b_{n-2} \cdots b_1 b_1 b_0,
+\end{equation}
+
+ここで、各$b_i$は$0$または$1$のいずれかであり、$b_i \in {0、1}$です。 $x$に相当する$10$進数は
+\begin{equation}
+\label{38}
+x = b_{n-2} 2^{n-1} + b_{n-2} 2^{n-2} + \cdots b_1 2^2  b_1 2^1 b_0 2^0,
+\end{equation}
+です。
+
+量子コンピューターでは、各$b_i$はそれぞれ$\ket{u}$または$\ket{d}$で表すことができます。
+対応$\ket{u} \to \ket{0}, \ket{d} \to \ket{1}$を作成し、$　\{ \ket{0},\ket{1} \}$を計算基底と呼びます。
+
+ただし、後者の表現では、2次元ヒルベルト空間で量子ビットまたは量子ビットベクトルになります。 各キュービットは、任意の線形結合$ a \ket{0} + c \ket{1} $にすることができます。ここで、$ |a|^2 + |c|^2 = 1 $です。たとえば、$3$キュービット状態を考えます。
+
+\begin{equation}
+\label{39}
+\ket{\psi} = \ket{q_2} \otimes \ket{q_1} \otimes \ket{q_o}  where
+\end{equation}
+
+\begin{equation}
+\label{40}
+\ket{q_2} = \frac{1}{\sqrt{2}} ( \ket{0} + \ket{1})
+\end{equation}
+
+\begin{equation}
+\label{41}
+\ket{q_1} = \ket{1}
+\end{equation}
+
+\begin{equation}
+\label{42}
+\ket{q_0} = \ket{1}.
+\end{equation}
+
+その場合、量子レジスタは$\ket{3}$と$\ket{7}$の重ね合わせです。
+
+\begin{equation}
+\label{43}
+\ket{\psi} = \frac{1}{\sqrt{2}} (\ket{0} + \ket{1}) \otimes \ket{1} \otimes \ket{1} 
+\end{equation}
+
+\begin{equation}
+\label{44}
+   = \frac{1}{\sqrt{2}} (\ket{011} + \ket{111}) 
+\end{equation}
+
+\begin{equation}
+\label{45}
+ = \frac{1}{\sqrt{2}} ( \ket{3} + \ket{7})
+\end{equation}
+
+この計算については、以下でさらに詳しく説明します。
+
+$n$キュービットの集合は、サイズnの量子レジスタと呼ばれます。 $N = 2^n$ のような数があります
+または量子レジスターは、計算基底$b_i, b_i \in \{ \ket{0},\ket{1} \}$の観点から$x$を状態します。したがって、 $ x \in S= \{0,1,2, \cdot \cdot \cdot, N-1 \} $。
+そして、ヒルベルト空間の次元は $N = 2^n$です。 つまり、$n$ビットの古典的なコンピューターには合計$2^n$の可能な状態があります。 対照的に、$n$キュービットの量子コンピューターは、これらの$2^n$状態の任意の重ね合わせになり、$2^n$次元ヒルベルト空間で任意の状態またはベクトルになります。 すべての計算基底状態の重ね合わせ$ket{\psi_s}$で、振幅$a_x$を数または状態$x$に関連付けられた確率振幅とするのは、次のように指定されます。
+
+
+\begin{equation}
+\label{46}
+\ket{\psi_s} = \sum_{x=0}^{2^n - 1} a_x \ket{x}.
+\end{equation}
+
+もし、すべての振幅$a_x$が等しい場合、この重ね合わせは指定されます。
+
+\begin{equation}
+\label{47}
+\ket{\psi_s} = \frac{1}{\sqrt{2^n}} \sum_{x=0}^{2^n - 1}  \ket{x}.
+\end{equation}
+
+式（47）の総和では、$\ket{x}$はすべての基底状態または数、およびすべてを通過することに注意してください。
+基本状態は互いに直交しています。 したがって、与えられた数または状態$\ket{z}$に対して、$\ket{z}$の振幅は内積であることがわかります。
+
+\begin{equation}
+\label{48}
+\braket{z | \psi_s} = \frac{1}{\sqrt{2^n}}.
+\end{equation}
+
+したがって、$\ket{\psi_s}$を測定すると、確率で$\ket{z}$が得られます。
+
+\begin{equation}
+\label{49}
+\left| \braket{z | \psi_s} \right|^2 = \frac{1}{2^n}.
+\end{equation}
+
+
+さて、このような$\ket{u}s$と$\ket{d}s $ (つまり、$\ket{0}s$と$\ket{1}s$）の多状態システムがある場合、それぞれ
+2次元のヒルベルト空間$\mathbf{H}_2$の場合、状態を並べて配置するだけです。 このような2つの状態が並んで、$\mathbf{H}_4 = \mathbf{H}_2 \otimes \mathbf{H}_2 $次元のヒルベルト空間を形成します。 したがって、2キュービット量子レジスタの基底ベクトルを表すことができます。
+
+
+\begin{equation}
+\label{50}
+\ket{0} \ket{0} =  \ket{u} \otimes \ket{u}
+\left( \begin{array}{ccc}
+ 0  \\
+ 1 
+\end{array} \right) 
+\ket{u}
+=
+\left( \begin{array}{ccc}
+ u  \\
+ \mathbf{0} 
+\end{array} \right) 
+=
+\left( \begin{array}{ccc}
+ 1  \\
+ 0  \\
+ 0  \\
+ 0
+\end{array} \right) .
+\end{equation}
+
+
+\begin{equation}
+\label{51}
+\ket{0} \ket{1} =  \ket{u} \otimes \ket{d}
+\left( \begin{array}{ccc}
+ 0  \\
+ 1 
+\end{array} \right) 
+\ket{d}
+=
+\left( \begin{array}{ccc}
+ d  \\
+ \mathbf{0} 
+\end{array} \right) 
+=
+\left( \begin{array}{ccc}
+ 0  \\
+ 1  \\
+ 0  \\
+ 0
+\end{array} \right) .
+\end{equation}
+
+
+\begin{equation}
+\label{52}
+\ket{1} \ket{0} =  \ket{d} \otimes \ket{u}
+\left( \begin{array}{ccc}
+ 0  \\
+ 1 
+\end{array} \right) 
+\ket{u}
+=
+\left( \begin{array}{ccc}
+ \mathbf{0}  \\
+ u
+\end{array} \right) 
+=
+\left( \begin{array}{ccc}
+ 0  \\
+ 0  \\
+ 1  \\
+ 0
+\end{array} \right) .
+\end{equation}
+
+\begin{equation}
+\label{53}
+\ket{1} \ket{0} =  \ket{d} \otimes \ket{d}
+\left( \begin{array}{ccc}
+ 0  \\
+ 1 
+\end{array} \right) 
+\ket{d}
+=
+\left( \begin{array}{ccc}
+ \mathbf{0}  \\
+ d
+\end{array} \right) 
+=
+\left( \begin{array}{ccc}
+ 0  \\
+ 0  \\
+ 0  \\
+ 1
+\end{array} \right) .
+\end{equation}
+
+過度の表記法に飽きてしまった物理学者は、通常、キュービットのテンソル積を次のように圧縮します。
+
+
+\begin{equation}
+\label{54}
+\ket{u} \otimes \ket{u} \otimes \cdots \otimes \ket{u}
+\to
+\ket{u} \ket{u} \cdots \ket{u}.
+\end{equation}
+
+そして、しばしばそれを再び圧縮します
+
+\begin{equation}
+\label{55}
+\ket{u} \ket{u}  \cdots \ket{u}
+\to
+\ket{uu \cdots u}.
+\end{equation}
+
+複数の状態を記述するこれらの異なる方法はすべて、同じことを意味します。 したがって、$n$量子ビットベクトルとして表される数は、次元$2^n$の空間にあり、$1× 2^n$列ベクトル（$n$量子ビットの状態によって決定される列ベクトルの$2^n$スロットのそれぞれ）として記述できます。 上記の$\mathbf{H}_2 \otimes \mathbf{H}_2 $。 ここで、これらのベクトルを操作する行列$W_{2^n}$を紹介します。
+
+
+\textbf{ウォルシュ-アダマール変換}。 Walsh-Hadamard Transformation、$W_{2^n}$は、次のように再帰的に定義されます。 
+
+\begin{equation}
+\label{56}
+W_2 = H =
+\frac{1}{\sqrt{2}}
+\left( \begin{array}{ccc}
+ 1 & 1  \\
+ 1 & -1
+\end{array} \right) ,
+\end{equation}
+
+
+\begin{equation}
+\label{57}
+W_{2^n} = 
+\frac{1}{\sqrt{2^n}}
+\left( \begin{array}{ccc}
+ W_{2^{n-1}} & W_{2^{n-1}}  \\
+ W_{2^{n-1}} & -W_{2^{n-1}}
+\end{array} \right),  for \quad n > 1 .
+\end{equation}
+
+
+W4は
+
+\begin{equation}
+\label{58}
+W_{4} =  W_{2^n} \otimes W_{2^n} = 
+\frac{1}{\sqrt{2}}
+\left( \begin{array}{ccc}
+ 1 W_2 & 1 W_2  \\
+ 1 W_2 & -1 W_2
+\end{array} \right)
+=
+\frac{1}{2}
+\left( \begin{array}{cccc}
+1 & 1 & 1 & 1  \\
+1 & -1 & 1 & -1  \\
+1 & 1 & -1 & -1  \\
+1 & -1 & -1 & 1  
+\end{array} \right).
+\end{equation}
+
+そして、例としては、
+
+\begin{equation}
+\label{59}
+W_{4} \ket{uu}
+=
+\frac{1}{2}
+\left( \begin{array}{cccc}
+1 & 1 & 1 & 1  \\
+1 & -1 & 1 & -1  \\
+1 & 1 & -1 & -1  \\
+1 & -1 & -1 & 1  
+\end{array} \right)
+\left( \begin{array}{ccc}
+1  \\
+0 \\
+0 \\
+0
+\end{array} \right)
+=
+\frac{1}{2}
+\left( \begin{array}{ccc}
+1  \\
+1 \\
+1 \\
+1
+\end{array} \right).
+\end{equation}
+
+出力を再配置すると、$ S = \{0,1,2,3 \}$の要素の重ね合わせであることがわかります。
+
+\begin{equation}
+\label{60}
+\frac{1}{2}
+\left( \begin{array}{c}
+1  \\
+1 \\
+1 \\
+1
+\end{array} \right)
+=
+\frac{1}{2}
+\left[
+\left( \begin{array}{c}
+1  \\
+0 \\
+0 \\
+0
+\end{array} \right)
++
+\left( \begin{array}{c}
+0 \\
+1 \\
+0 \\
+0
+\end{array} \right)
++
+\left( \begin{array}{c}
+0  \\
+0 \\
+1 \\
+0
+\end{array} \right)
++
+\left( \begin{array}{c}
+0  \\
+0 \\
+0 \\
+1
+\end{array} \right)
+\right]
+=
+\frac{1}{2}\left[
+\ket{00} + \ket{01}+\ket{10}+\ket{11}
+\right]
+\end{equation}
+
+\begin{equation}
+\label{61}
+=
+\frac{1}{2}
+\left[
+\ket{0} + \ket{1}+\ket{2}+\ket{3}
+\right]
+=
+\frac{1}{\sqrt{2^n}}
+\sum_{x=0}^{2^n-1} \ket{x}
+\end{equation}
+
+ここで、$n = 2$であり、2進数を10進数にマッピングしました。 したがって、
+$\ket{\psi} = W_4 \ket{uu}$で$\ket{\psi} $を測定すると、与えられた数$y、y \in S$が確率$ \left[ \frac{1}{2} \right]^2 = \frac{1}{4}$見つかります。
+ヒルベルト空間$\mathbf{H}_4$の基底ベクトルとしてベクトル$\ket{x}$を取ることができます。 
+すべて状態$\ket{0}$のnビットに$W_{2^n}$を適用すると、$S = {0,1, \cdots ,2n -1}$のすべての状態（数値）が均等に重み付けされて重ね合わされます。
+
+\begin{equation}
+\label{62}
+W_{2^n}
+\ket{00 \cdots 000}
+=
+\frac{1}{\sqrt{2^n}}
+\sum_{x=0}^{2^n-1} \ket{x}.
+\end{equation}
+
+量子レジスタの初期状態のキュービットがすべて$\ket{0}$ではない（すべて$\ket{u}$ではない）場合はどうなりますか？ $x = x_{n−1} x_{n−2} \cdots x_2 x_1 x_0$、$y = y_{n−1} y_{n−2} \cdots y_2 y_1 y_0$のビット単位の内積$x \cdot y$を $x・y = x_{n−1} y_{n−1} + x_{n−2} y_{n−2} + \cdots + x_2 y_2 + x_1 y_1 + x_0 y_0 \ mod \ 2 $として定義します。（この例では、結果mod 2を取得することは冗長です。）次に、レジスタが最初に状態$\ket{y}$であった場合、変換は次のようになります。
+
+\begin{equation}
+\label{63}
+\ket{\psi}
+=
+W_{2^n} \ket{y}
+=
+\sum_{x=0}^{2^n-1} (-1)^{x \cdot y} \ket{x}.
+\end{equation}
+
+たとえば、$\ket{y}$が3量子ビット状態$\ket{110}$であるとします。 次に、ビット単位の内積と符号
+を表Vに示します。したがって、出力状態$\ket{\psi}$を次のように書くことができます。
+
+\begin{equation}
+\label{64}
+\ket{\psi}
+=
+W_{2^n} \ket{y}
+=
+\frac{1}{\sqrt{2^3}}
+\left(
+\ket{000} + \ket{001} - \ket{010} - \ket{011} - \ket{100} - \ket{101}  + \ket{110} + \ket{111}
+\right)
+\end{equation}
+
+\begin{equation}
+\label{65}
+=
+\frac{1}{\sqrt{2^3}}
+\left(
+\ket{0} + \ket{1} - \ket{2} - \ket{3} - \ket{4} - \ket{5}  + \ket{6} + \ket{7}
+\right).
+\end{equation}
+
+
+キュービットの変換はユニタリでなければなりません。 行列$U$は、その逆数がその複素共役転置に等しい場合、ユニタリ行列$U^{-1} = U^{\dag}$であることを思い出してください。 したがって、$ U^{\dag} U = \mathbf{1}$です（エルミート行列$M$の場合、$M^{\dag}= M$であるため、$M^2 = \mathbf{1}$の場合、エルミート行列はユニタリです。）パウリスピン行列、アダマール行列$H$、およびウォルシュ行列$W_{2^n}$はすべてユニタリです。
+
+\begin{table}[htb]
+\caption{初期キュービットを使用したウォルシュ変換$\ket{110}$}
+\centering
+\begin{tabular}{|r|r|r|r|} \hline
+$\ket{y}$ & $\ket{x}$ & $x \cdot y$ & $(-1)^{xy}$ \\  \hline
+$\ket{110}$ & $\ket{000}$ & 0 & 1  \\
+$\ket{110}$ & $\ket{001}$ & 0 & 1  \\
+$\ket{110}$ & $\ket{010}$ & 1 & -1  \\
+$\ket{110}$ & $\ket{011}$ & 1 & -1  \\
+$\ket{110}$ & $\ket{100}$ & 1 & -1  \\
+$\ket{110}$ & $\ket{101}$ & 1 & -1  \\
+$\ket{110}$ & $\ket{110}$ & 2 & 1  \\
+$\ket{110}$ & $\ket{111}$ & 2 & 1  \\ \hline
+\end{tabular}
+\end{table} 
+
+
+
+ユニタリ変換は、ベクトルの長さを保存します。 これは、$\ket{\psi}$と$U\ket{\psi}$の長さの2乗を比較するとわかります。
+
+\begin{equation}
+\label{66}
+\braket{\psi | \psi} = | \psi |^2
+\end{equation}
+
+\begin{equation}
+\label{67}
+\braket{\psi | U^{\dag} U | \psi} = \braket{\psi | \mathbf{1} | \psi}  = | \psi |^2 .
+\end{equation}
+
+必要なもう1つのユニタリ変換は次のとおりです。
+
+\begin{equation}
+\label{68}
+U_f \ket{x} \ket{y}
+= \ket{x} \ket{y +_2 f(x) }
+\end{equation}
+
+ここで、$ f: \{0,1 \} \to \{ 0, 1 \}$、および$+_2$は、$2(modulo)$を法とする加算を意味します。$U_f$は、2つのキュービット$\ket{x} \ket{y}$で同時に動作することに注意してください。 この場合、$\ket{x}$キュービットは制御キュービットと見なされ、操作中に変化しません。 $\ket{y}$はデータまたはターゲットキュービットであり、$f(x) = 0$または$f(x) = 1$のどちらであるかによって変化します。$f(x) = x$場合、ここでの$U_f$は$c-NOT$または$XOR$ゲートと呼ばれます。 、多くの場合、否定記号$\lnot$で示されます。 制御キュービットとターゲットキュービットを入力として受け取り、ターゲットキュービットを2を法とする2つの入力の合計に置き換えます。
+
+\begin{equation}
+\label{69}
+\lnot \ket{x} \ket{y}
+= \ket{x} \ket{y +_2 x}
+\end{equation}
+
+グローバー検索アルゴリズムに関する将来の参照のために、$\ket{y} = \ket{0} - \ket{1}$の場合の$U_f$の影響に注意してください。
+
+
+\begin{equation}
+\label{70}
+U_f \ket{x} \otimes \left( \ket{0} - \ket{1} \right)
+= \ket{x} \otimes \left[ \left(  
+\ket{0} - \ket{1} \right) 
++_2 f(x)
+\right].
+\end{equation}
+
+$f(x) = 0 $のときに、
+
+\begin{equation}
+\label{71}
+\ket{x} \otimes \left[ \left(  
+\ket{0} - \ket{1} \right) 
++_2 f(x)
+\right]
+=
+\ket{x} \otimes \left( \ket{0} - \ket{1} \right)
+=
+\ket{x} \otimes \left( -1 \right)^{f(x)} \left( \ket{0} - \ket{1} \right).
+\end{equation}
+
+です。
+
+そして、$f(x) = 1 $のときに、
+
+\begin{equation}
+\label{72}
+\ket{x} \otimes \left[ \left(  
+\ket{0} - \ket{1} \right) 
++_2 f(x)
+\right]
+=
+\ket{x} \otimes \left( \ket{1} - \ket{0} \right)
+=
+\ket{x} \otimes \left( -1 \right)^{f(x)} \left( \ket{0} - \ket{1} \right).
+\end{equation}
+
+です。 したがって要約すると、
+
+\begin{equation}
+\label{73}
+U_f \ket{x} \otimes \left( \ket{0} - \ket{1} \right)
+= \ket{x} \otimes \left( -1 \right)^{f(x)} \left( \ket{0} - \ket{1} \right).
+\end{equation}
+
+$S = \{0,1,2, \cdots, 2^{n-1} \}$のドメイン全体で定義されるように$f（x）$の定義を変更すると、$f（x）： x \in S  \to \{ 0,1 \}$となります。
+次に、いくつかの$a \in S$に対して$f(a)= 1$とし、すべての$x = a$に対して$f(x)= 0$とすることにより、$f(x)$を指標または特性関数として使用できます。
+このバージョンの$f(x)$を$f_a (x)$として表し、関連するユニタリ変換を$U_{f_a} \ket{x} \ket{y} = \ket{x} \ket{y +_2 f_a (x)}$として表します。 次に、前と同じように、
+
+\begin{equation}
+\label{74}
+U_{f_a} \ket{x} \otimes \left( \ket{0} - \ket{1} \right)
+= \ket{x} \otimes \left( -1 \right)^{f_a (x)} \left( \ket{0} - \ket{1} \right).
+\end{equation}
+
+となります。\\
+
+\textbf{グローバー検索アルゴリズム}。コンピュータサイエンスでは、オラクル(神のみぞ知るようなランダムオラクル)は理論的ブラックボックスのサブルーチンです。
+そして、見ることは許されていません。 オラクルの例は、特性関数$f_a（x) : x \in S \to \{ 0,1 \}$ です。 それは$f_a（a）= 1$を設定し、そうでない場合は$fa（x）= 0, x \ne a$を設定します。 $f_a（x）$が動作可能である場合$a$が何であるかについての知識がなければ、$f_a（x）$はオラクルです。 $x$の値はソートされていない可能性があります。
+リスト、たとえばランダム化された電話番号（またはアルファベット順にソートされた電話番号所有者の名前）。 目的は、$f_a（x）$の出力に依存してを見つけることです。 $N = 2n$の場合
+アイテム、50％の確率でを見つけるための$f_a（x）$への予想されるクエリ数は
+$\frac{N}{2}$になります。 しかし、グローバーは、量子コンピューターが約$\frac{\pi}{4} \sqrt{N}$回の検索でほぼ100％の確率で同じアイテムを見つけることができることを示しました。
+
+数$a$を探していると仮定します。ここで、$a$は$n$ビットです。 インジケーター関数$f_a（x）$をオラクルとして使用して、を見つけやすくします。
+
+初期準備を行います。 最初に、$n + 1$の状態でエリアキュービットレジスタを準備します。これらはすべて$\ket{0}$です。
+
+\begin{equation}
+\label{75}
+\ket{0}\ket{0} \cdots \ket{0}\ket{0}\ket{0} \otimes \ket{0},
+\end{equation}
+
+ここで、テンソル積は、残りのキュービットからそれを引き立たせるために、右端のキュービットに対して明示的に書き出されています。左の$n \ket{0}$キュービットに ウォルシュ変換の$W_{2^n}$を適用し、最後のキュービットに単純な$\mathbf{H} \sigma_x$変換を適用します。 前に見たように、
+
+\begin{equation}
+\label{76}
+\ket{ \psi_s} =
+W_{2^n} \ket{0}\ket{0} \cdots \ket{0}\ket{0}\ket{0} \otimes \ket{0}
+=\frac{1}{\sqrt{2^n}} \sum_{x=0}^{2^n -1} \ket{x}
+\end{equation}
+
+\begin{equation}
+\label{77}
+H \sigma_x \ket{0} 
+=
+\frac{1}{\sqrt{2}} \left(  \ket{0} - \ket{1} \right),
+\end{equation}
+
+コンピュータ全体の状態が、
+
+\begin{equation}
+\label{78}
+\ket{\psi_s} \otimes H \sigma_x \ket{0}
+=
+\frac{1}{\sqrt{2^n}}  \sum_{x=0}^{2^n-1} \ket{x} \otimes \frac{1}{\sqrt{2}}  \left(  \ket{0} - \ket{1} \right),
+\end{equation}
+
+ステップ１として、 次に、ユニタリ変換$U_{f_a}$を適用します。
+
+\begin{equation}
+\label{79}
+U_{f_a} \ket{x} \otimes \left( \ket{0}  - \ket{1} \right)
+=
+\ket{x} \otimes (-1) ^{f_a (x)}  \left( \ket{0}  - \ket{1} \right),
+\end{equation}　
+
+これにより以下を得ます。
+
+\begin{equation}
+\label{80}
+U_{f_a} ( \ket{\psi} \otimes H \psi_x \ket{0} )
+=
+\frac{1}{\sqrt{2^n}}  \sum_{x=0}^{2^n-1} \ket{x} \otimes \frac{1}{\sqrt{2}} (-1)^{f_a (x)} \left(  \ket{0} - \ket{1} \right) 
+\end{equation}　
+
+\begin{equation}
+\label{81}
+=
+\frac{1}{\sqrt{2^n}} (-1)^{f_a (x)}   \sum_{x=0}^{2^n-1} \ket{x} \otimes \frac{1}{\sqrt{2}} \left(  \ket{0} - \ket{1} \right).
+\end{equation}　
+
+$U_{f_a}$の効果は、サインオン$\ket{x}= \ket{x}$を変更し、他のすべての重ね合わせた状態を変更しないことです。 符号$(-1)^{f_a}（x）$が式（80）の右端のキュービットから式（81）のキュービットの重ね合わせにどのように転送されたのか疑問に思われるかもしれません。 答えは、右端のキュービットがデコヒーレンスし、環境と相互作用し、$\ket{0}$または$\ket{1}$に「崩壊」することを許可されているということです。 これにより、2部状態を記述するパラメータが左側の$n$キュービットレジスタに強制されます。
+
+ステップ2として。 左端の$n$キュービットに$W_{2^n}$を再度適用します。 （または、$W_{2^n} \otimes \mathbf{1}_2 $を$n + 1$キュービットに適用します。ここで、$\mathbf{1}_2$は$2 \times 2$単位行列です。） 
+
+ステップ3として。 $f0（x）$を状態 $\ket{x}= \ket{0}$のインジケーター関数とします。 キュービットレジスタの現在の状態に$ -U_{f_0}$を適用します（否定に注意してください）。 この操作は、$\ket{x}= \ket{0}$を除くすべての状態$\ket{x}$の符号を変更します。 
+
+つまり、$ U_{f_0} $  
+のマップ　$ \ket{0} \in - \ket{0} $であり、
+$ U_{f_0}$, $ − U_{f_0} $の否定は、$ \ket{0} $の元の符号を復元しますが、他のすべての状態の符号を変更します。
+
+ステップ4として。 左端の$n$キュービットに$W_{2^n}$を再度適用します。
+手順1〜4を$ \frac{\pi}{4} $回繰り返します。 次に、最終状態（左端の$n$キュービット）$\ket{\psi_f} $をサンプリングします。確率1に近い場合、$ \ket{\psi_f} = \ket{a}$となる。 
+
+これがグローバーの検索アルゴリズムですが、どういう意味ですか？ ステップ1、2、3、および4は何をしますか？ 簡単な答え：$\ket{a}$にできるだけ近づくまで、原点を中心に最初の重ね合わせ$\ket{\psi_s}$を回転させます。 詳細を見てみましょう。 \\
+
+ステップ1での$U_{f_a}$の別の考え方は、行列$\mathbf{1} - 2 \ket{a} \bra{a}$です。 左端の$n$キュービットで動作します。 この操作を$\ket{x}$に適用すると、すべての基本状態$\ket{x} \ne \ket{a}$に対して$\ket{x}$が生成されますが、$\ket{x} = \ket{a}$に対しては$ - \ket{x}$が生成されます。 同様に、ステップ3で$U_{f_0}$を考える別の方法は、行列$\mathbf{1} - 2 \ket{0} \bra{0}$です。 この演算を$\ket{x}$に適用すると、すべての基底状態$\ket{x} \ne \ket{a}$に対して$\ket{x}$が生成されますが、$\ket{x} = \ket{a}$にに対しては$ - \ket{0}$が生成されます。\\
+
+ステップ1は、幾何学的に、ベクトル$ \ket{\psi_s}$に対して$ \ket{a}$に直交する超平面の周りの$\ket{\psi_s}$の反射$R_a$です。
+$W_{2^n}^{2} = \mathbf{1}$であるため、ステップ2から4は$-W_{2^n} U_{f_0} W_{2^n}^{-1}$に対応します。
+演算$-W_{2^n} U_{f_0} W_{2^n}^{-1}$は、元の $ \ket{\psi} \frac{1}{\sqrt{2^n}} \sum_{x=0}^{2^n-1} \ket{x}$の直交する超平面の周りの$\ket{\psi_s^R}$のさらなる反射に対応します。
+しかし、これは私たちが望んでいることではありません。 代わりに、$\ket{{\psi_s}^{\bot}}$を$\ket{\psi_s}$に垂直な単位ベクトルとします。
+演算$-W_{2^n} U_{f_0} W_{2^n}^{-1}$は、$\ket{{\psi_s}^{\bot}}$に直交する超平面の周りの$\ket{{\psi_s}^{R}}$のさらなる反射$R_s$に対応します。
+これをさらに反射されたベクトル$\ket{ {\psi_s}^{\prime}}$と呼びます。
+
+正味の効果は、$\ket{\psi}$と$\ket{a}$がまたがる平面内での$ \ket{\psi_s} \to \ket{\psi_s^{\prime}}$の
+回転$R_s R_a = −W_{2^n} U_{f_0} W_{2^a}^{-1} U_{f_a}$です。
+（ $ \ket{\psi_s}$ と$\ket{a}$がまたがる平面とは、$c \ket{\psi_s} + d \ket{a}$の形式のすべての状態を意味します。ここで、$c,d \in C$です。）
+
+要約すると、$\theta$を$ \ket{\psi_s}$と$\ket{a}$に直交する単位ベクトルの間の角度とします。後者は$\ket{a^{\bot}}$と指定されます。 簡単にするために、反時計回りの順序$\ket{a^{\bot}}$、$\ket{\psi_s}$、$\ket{a}$を想定しています。 次に、組み合わせ$R_s R_a$は$\ket{\psi_s}$を$2 \theta$ 反時計回りに回転させるため、$\ket{a^{\bot}}$ と$\ket{\psi_s}$ の間の角度は $3 \theta$になります。 つまり、$R_s R_a$は $\ket{\psi_s}$を$\ket{a}$に直交するベクトルである$\ket{a^{\bot}}$から遠ざけるため、$\ket{\psi_s}$を$\ket{a}$の自体に向かって角度$2 \theta$だけ移動します。
+
+グローバー検索アルゴリズムの全体的な考え方は、$\ket{\psi_s}$　が　$\ket{a}$にできるだけ近づくまで、$\ket{\psi_s}$　と　$\ket{a}$　がまたがる平面内で、原点を中心に状態$\ket{\psi_s}$を回転させることです。 次に、$\ket{\psi_s}$を測定すると、高い確率で$\ket{a}$が得られます。
+
+どのくらい回転しますか（$R_s R_a$を何回適用しますか）？ 回転が多すぎたり少なすぎたりして、オーバーシュートやアンダーシュートをしたくありません。 $\ket{\psi_s}$　を　$\ket{a}$　まで回転させてから停止します。 $\ket{\psi_s}$　と　$\ket{a^{\bot}}$　の間の角度が$\theta$に等しく、$\ket{a^{\bot}}$と$\ket{a}$によって形成される平面に最初にあるベクトルまたは状態$\ket{\psi_s}$を考えます。 つまり、最初の重ね合わせとして$\ket{\psi_s}$を書くことができます。
+
+
+\begin{equation}
+\label{82}
+\ket{\psi_s}
+=
+\cos \theta \ket{a^{\bot}} + \sin \theta \ket{a}
+\end{equation}　
+
+$R_s R_a = − W_{2^n} U_{f_0} W_{n^n}^{-1} U_{f_a}$ を$k$回適用した後、状態は次のようになります。
+
+\begin{equation}
+\label{83}
+(R_s R_a)^k \ket{\psi_s} 
+=
+\cos (2k+1) \theta \ket{a^{\bot}} + \sin (2k+1) \theta \ket{a}
+\end{equation}　
+
+ここで、$（2k + 1）\theta = \pi $の場合、$ \cos（2k + 1）\theta = 0$、$\sin（2k + 1） \theta = 1$であるため、次のようになります。
+
+\begin{equation}
+\label{84}
+(R_s R_a)^k \ket{\psi_s} 
+=
+\ket{a}
+\end{equation}　
+
+$k$は整数でなければならないため、これは達成できない可能性がありますが、最も近い整数を解いてみましょう。ここで、$[ \cdot ] _{nint}$は最も近い整数を示します。
+
+\begin{equation}
+\label{85}
+k = 
+[  \frac{\pi}{ 4 \theta} - \frac{1}{2} ]_{nint} .
+\end{equation}　
+
+2つの単位ベクトルの内積は、それらの間の角度の余弦を与えることを忘れないでください。
+また、$\ket{a}$と$\ket{\psi_s}$の間の初期角度は$\pi - \theta$です。 したがって、
+
+\begin{equation}
+\label{86}
+\braket{a | \psi_s} = 
+\frac{1}{\sqrt{2^n}} = \cos( \frac{\pi}{2} - \theta) = \sin(\theta)
+\end{equation}　
+
+$N = 2^n$の場合、$ \sin \theta \approx \theta$に設定できます。 したがって、$k$の式に$\frac{1}{\sqrt{N}} = \theta$を代入すると、次のようになります。
+
+\begin{equation}
+\label{87}
+k =
+\left[ 
+\frac{\pi}{4} \sqrt{N} - \frac{1}{2}
+\right]_{nint}
+\end{equation}　
+
+したがって、このkの値は、$1$に近い確率で$（ R_s R_a ）^k  \ket{\psi_s} = \ket{a}$を取得します。\\
+
+
+\textbf{グローバー検索アルゴリズムの例}。
+これは、$n = 3$キュービット$（N = 2^n = 8）$のグローバー検索の例です。(状態は、$\frac{1}{\sqrt{2}}(\ket{0} - \ket{1}) $にあり、変化しないキュービット$n +1$への参照は省略します。 したがって、この例のユニタリ演算子の次元も$2^n = 8$です。）未知の数が$\ket{a} = \ket{5}$であると仮定します。マトリックスまたはブラックボックスオラクル$U_{f_a}$は次のようになります。
+
+
+\begin{equation}
+\label{88}
+U_{f_5}
+=
+\left( \begin{array}{cccccccc}
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & -1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1
+\end{array} \right).
+\end{equation}
+
+(番号付けは$0$で始まり、$7$で終わるため、ここでの$-1$は$\ket{5}$のスロットにあることに注意してください。)
+
+この行列は、サインオン状態$\ket{5}$を反転し、他の状態を変更せずに残します。 ウォルシュ行列$W_8$は
+
+\begin{equation}
+\label{89}
+W_8
+=
+\frac{1}{2^3}
+\left( \begin{array}{cccccccc}
+1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+1 & -1 & 1 & -1 & 1 & -1 & 1 & -1 \\
+1 & 1 & -1 & -1 & 1 & 1 & -1 & -1 \\
+1 & -1 & -1 & 1 & 1 & -1 & -1 & 1 \\
+1 & 1 & 1 & 1 & -1 & -1 & -1 & -1 \\
+1 & -1 & 1 & -1 & -1 & 1 & -1 & 1 \\
+1 & 1 & -1 & -1 & -1 & 1 & 1 & 1 \\
+1 & -1 & -1 & 1 & -1 & 1 & 1 & -1 
+\end{array} \right).
+\end{equation}
+
+行列$-U_{f_0}$は
+
+\begin{equation}
+\label{90}
+-U_{f_0}
+=
+\left( \begin{array}{cccccccc}
+-1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & -1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & -1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & -1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & -1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & -1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & -1 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & -1
+\end{array} \right).
+\end{equation}
+
+この行列は、$\ket{0}$を除くすべての状態の符号を変更します。 最後に、グローバーアルゴリズムでステップ$R_s R_a$を繰り返します。
+
+\begin{equation}
+\label{91}
+R_s R_5 
+=
+-W_8 U_{f_0} W_8^{-1} f_{f_5}
+=
+\frac{1}{4}
+\left( \begin{array}{cccccccc}
+-3 & 1 & 1 & 1 & 1 & -1 & 1 & 1 \\
+1 & -3 & 1 & 1 & 1 & -1 & 1 & 1 \\
+1 & 1 & -3 & 1 & 1 & -1 & 1 & 1 \\
+1 & 1 & 1 & -3 & 1 & -1 & 1 & 1 \\
+1 & 1 & 1 & 1 & -3 & -1 & 1 & 1 \\
+1 & 1 & 1 & 1 & 1 & 3 & 1 & 1 \\
+1 & 1 & 1 & 1 & 1 & -1 & -3 & 1 \\
+1 & 1 & 1 & 1 & 1 & -1 & 1 & -3 
+\end{array} \right).
+\end{equation}
+
+最初の準備は
+
+\begin{equation}
+\label{92}
+W_8 \ket{0} \ket{0} \ket{0}
+=
+\frac{1}{\sqrt{2^3}}
+\left( \begin{array}{c}
+1 \\
+1 \\
+1 \\
+1 \\
+1 \\
+1 \\
+1 \\
+1 
+\end{array} \right).
+\end{equation}
+
+$N = 2^3 = 8$なので、回転数$k$を最も近い整数として計算します。
+
+\begin{equation}
+\label{93}
+k =
+\left[ 
+\frac{\pi}{4} \sqrt{8} - \frac{1}{2}
+\right]_{nint} = 2.
+\end{equation}　
+
+したがって、最初の回転後、状態は次のようになります。
+
+\begin{equation}
+\label{94}
+R_s R_5
+W_8 \ket{0} \ket{0} \ket{0}
+=
+\frac{1}{4 \sqrt{2}}
+\left( \begin{array}{c}
+1 \\
+1 \\
+1 \\
+1 \\
+1 \\
+5 \\
+1 \\
+1 
+\end{array} \right)
+\end{equation}
+
+
+そして、2回目の回転の後、
+
+\begin{equation}
+\label{95}
+(R_s R_5)^5
+W_8 \ket{0} \ket{0} \ket{0}
+=
+\frac{1}{8 \sqrt{2}}
+\left( \begin{array}{c}
+-1 \\
+-1 \\
+-1 \\
+-1 \\
+-1 \\
+11 \\
+-1 \\
+-1 
+\end{array} \right).
+\end{equation}
+
+$\ket{5}$の振幅が$\frac{11}{8 \sqrt{2}}$になっていることに注意してください。 したがって、$（R_s R_5）^2 W_8 \ket{0} \ket{0} \ket{0}$ の測定値は、確率$ (\frac{11}{8 \sqrt{2}})^2 =.9453　$を得られます。
+
+
+\textbf{The guess a number game I.　}
+ボブはアリスに次のゲームに挑戦します。 アリスの、数$a$は、
+$S = \{ 0,1, \cdots , N − 1 \} $ からであり、彼は特定の試行回数$k$でそれを推測しようとします。
+アリスは、ボブの各ターンの後、オラクル$U_{f_a}$として機能します。
+彼らは$N = 2^{30} = 1,073,741,824$で同意します。
+アリスは、古典的に、ボブは$N = 2^{29} = 536,870,912$が50％の確率で数を推測しようとすることを要求するので、彼女はボブに最大$k = 100,000,000$を許可することに同意します。
+利点はすべて彼女のものだということ。 ただし、ボブはグローバー検索アルゴリズムを使用するつもりであり、$k = [ \frac{\pi}{4} \sqrt{2^{30}} − \frac{1}{2}]_{nint} = 25,735$回を超えて推測するつもりはありません。
+
+ボブは最初に$N + 1$キュービットを次のように設定します
+
+\begin{equation}
+\label{96}
+\ket{\psi_s} \otimes H \sigma_x \ket{0}
+=
+\frac{1}{\sqrt{2^n}}
+\sum_{x=0}^{2^n -1} \ket{x}
+\otimes
+\frac{1}{\sqrt{2}}(\ket{0} - \ket{1}),
+\end{equation}
+
+式（78）のように、彼は左端の$n$キュービット$\ket{\psi_s}$をアリスに提示します。 これに続いて、アリスによる$R_a$の移動、ボブによる$R_s$の再生などが続き、$k$が移動した後、$n$キュービットシステムの状態は次のようになります。
+
+\begin{equation}
+\label{97}
+(R_s R_a)^k \ket{\psi_s} = 
+\cos ( 2k +1 ) \theta \ket{a^{\bot}} 
++ \sin ( 2k + 1 ) \theta \ket{a}
+\end{equation}
+
+次に、システムが測定され、ボブが$| \sin(2k + 1) \theta ^2 | $の確率で勝ちます。
+アリスの驚いたことに、彼女はボブが許可された動きの数が少ないにもかかわらず、繰り返し勝つことに気づきました。
+（ボブの勝率は $p \ge 1 − \frac{1}{N} $です。）
+いくつかのゲームの後、彼女はボブが常に同じ数の動き$k = 25,735$をプレイしていることに気付きます。彼女は進行中の陰謀があるのではないかと疑うようになります。
+
+\textbf{Bernstein −Vaziraniオラクル。}
+以前、ビット単位の内積$x \cdot y$を定義しました。 $y$の代わりに$0s$と$1s$の定数ベクトル$a$を使用し、
+$ f_{bv}^{a} : { 0,1 }^n \to {0,1} $を次のように定義します。
+
+
+\begin{equation}
+\label{98}
+f_{bv}^{a} (x, a) = x \cdot a
+\end{equation}
+
+関連する変換を伴う
+
+\begin{equation}
+\label{99}
+T^a_{bv} \ket{x} = (-1) ^{f^a_{bv}} \ket{x} = (-1) ^{x \cdot a} \ket{x}.
+\end{equation}
+
+
+これはBernstein-Vaziraniのオラクルです。 $a$を見つけるには、$f_{bv}^{a} (x, a) $の測定値がいくつ必要ですか？
+古典的には、$x$のすべての可能な値に対して測定を実行してから、$a$の線形方程式のセットを解く必要があります。 しかし、量子機械的に解くのはたった1つのステップです。
+理由を確認するには、式（63）と、初期状態$\ket{y} \ne \ket{0}$のウォルシュ変換の表5の計算を参照してください。
+  次に、すべての状態の等しい重ね合わせに対する変換$T_{bv}^{x} $の効果を比較します。
+  
+\begin{equation}
+\label{100}
+T_{bv}^a \ket{\psi_s} = \frac{1}{\sqrt{2^n}} \sum_{x=0}^{2^n -1} \ket{x} =  \frac{1}{\sqrt{2^n}} \sum_{x=0}^{2^n -1}  (-1) ^{x \cdot a} \ket{x}.
+\end{equation}
+ 
+これは、初期状態のウォルシュ変換です$\ket{a}!$ したがって、Walsh変換の別のアプリケーション（それ自体の逆）で$\ket{a}$を見つけることができます。
+
+\begin{equation}
+\label{101}
+W_{2^n} T^a_{bv} \ket{\psi_s} = \ket{a}.
+\end{equation} 
+
+\textbf{The guess a number game II.ナンバーゲームII}
+アリスはボブに言います、あなたはあまりにも多くの推測を得ています。 ゲームを変更するか、もうプレイしません。 ボブは言います：なぜあなたが不平を言っているのか分かりません。 合意した推測の数のごく一部しか作成していません。 しかし、私はあなたに何を話すでしょう。
+2つの推測のみを行うための予備的な推測です。フィードバック情報を提供してから、数の2番目の最後の推測を行います。必要なフィードバックは、最初の推測にオラクルとして適用されるために$ T_{bv}^a$が必要です。
+（もちろん、ボブは最初の推測として$\ket{\psi_s}$を提出する予定です。）
+
+アリスは同意し、ゲームは次のように進行します。\\
+\ \   ボブ：準備 $\ket{\psi_s} = W_{2^n} \ket{0 \cdots 00}  = \frac{1}{\sqrt{2^n}} \sum_{x=0}^{2^n -1} \ket{x} $　\\
+\ \   アリス： $T_{bv}^{\psi_s} = \frac{1}{\sqrt{2^n}} \sum_{x=0}^{2^n -1} \ket{x} $ \\
+\ \   ボブ：$W_{2^n} T^a_{bv} \ket{\psi_s} = \ket{a} .$ 
+  
+ボブが勝ちます。 繰り返しになりますが、重要な機能は、状態の重ね合わせをアリスのオラクルに提示する機能でした。

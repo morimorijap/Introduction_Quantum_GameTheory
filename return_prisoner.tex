@@ -1,0 +1,284 @@
+\section{Return to the quantum Prisoner’s Dilemma 量子の囚人のジレンマに戻る}
+
+再度、囚人のジレンマの量子バージョンに戻りましょう。 表記の一貫性を保つために、$\ket{C} \to \ket{0}$と$\ket{D} \to \ket{1}$をマップします。
+ゲームの最終状態である式（123）を離れると、次の形式になります。
+
+\begin{equation}
+\label{133}
+\ket{\psi_f}
+=
+U^{\dagger} ( U_A \otimes U_B ) U \ket{00}.
+\end{equation}
+
+
+システムの測定が行われると、4つの基底ベクトル$\ket{00}, \ket{01}, \ket{10}, \ket{11}$のいずれかに投影され、関連する確率で、アリスへの期待どおりのペイオフ$\bar{\pi}_A$が得られます（表6を参照）:
+
+\begin{equation}
+\label{134}
+\bar{\pi}_A
+=
+3| \braket{\phi_F | 00} |^2
++0| \braket{\phi_F | 01} |^2
++5| \braket{\phi_F |10 } |^2
++1| \braket{\phi_F |11 } |^2 .
+\end{equation}
+
+ペイオフ確率はゲームの最終状態に依存し、最終状態はユニタリ行列Uに依存し、プレーヤーは$U_A$と$U_B$を移動します。 これらのそれぞれを順番に考えてみましょう。
+
+ユニタリ行列Uの目的は、アリスとボブのキュービットを絡ませることです。 この絡み合いがなければ、ボブとアリスへの見返りは古典的なゲームと同じままです（つまり、$(1,1)$のナッシュ均衡）。
+
+ユニタリ行列$U$を次のようにしましょう（ここで、$\otimes n$は単にテンソル積$n$回を意味します）。
+
+\begin{equation}
+\label{135}
+U
+=
+\frac{1}{\sqrt{2}}
+(\mathbf{1}^{\otimes 2} + i \sigma_x^{\otimes 2}).
+\end{equation}
+
+逆は、
+
+\begin{equation}
+\label{136}
+U^{\dagger}
+=
+\frac{1}{\sqrt{2}}
+(\mathbf{1}^{\otimes 2} - i \sigma_x^{\otimes 2}).
+\end{equation}
+
+
+次に、$U$を最初に適用した後、システム状態は次のようになります。
+
+\begin{equation}
+\label{137}
+U \ket{00}
+=
+\frac{1}{\sqrt{2}}
+( \ket{00} + i \ket{11}).
+\end{equation}
+
+
+
+ここで、最初に、協力（行列$UA = UB = \mathbf{1}$を適用）または欠陥（スピンフリップパウリ行列$U_A = U_B = \sigma_x$を適用）のいずれかである、アリスとボブのいくつかの従来の動きについて考えてみましょう。
+
+\begin{equation}
+\label{138}
+both \ cooperate:
+(\mathbf{1} \otimes \mathbf{1}) 
+U \ket{00}
+=
+\frac{1}{\sqrt{2}}
+( \ket{00} + i \ket{11})
+\end{equation}
+
+\begin{equation}
+\label{139}
+Alice \ defects:
+(\sigma_x \otimes \mathbf{1}) 
+U \ket{00}
+=
+\frac{1}{\sqrt{2}}
+( \ket{10} + i \ket{01})
+\end{equation}
+
+\begin{equation}
+\label{140}
+Bob \ defects:
+( \mathbf{1} \otimes \sigma_x) 
+U \ket{00}
+=
+\frac{1}{\sqrt{2}}
+( \ket{01} + i \ket{10})
+\end{equation}
+
+\begin{equation}
+\label{141}
+both \ defects:
+( \sigma_x \otimes \sigma_x) 
+U \ket{00}
+=
+\frac{1}{\sqrt{2}}
+( \ket{11} + i \ket{00}).
+\end{equation}
+
+次に、単一変換の逆$U$、つまり$U^{-1} = U^{\dagger}$を適用すると、次のようになります。
+
+\begin{equation}
+\label{142}
+both \ cooperate:
+U^{\dagger}
+\frac{1}{\sqrt{2}}
+( \ket{00} + i \ket{11})
+=
+\ket{00}
+with \ probability \ 1 
+\end{equation}
+
+\begin{equation}
+\label{143}
+Alice \ defects:
+U^{\dagger}
+\frac{1}{\sqrt{2}}
+( \ket{10} + i \ket{01})
+=
+\ket{10}
+with \ probability \ 1 
+\end{equation}
+
+\begin{equation}
+\label{144}
+Bob \ defects:
+U^{\dagger}
+\frac{1}{\sqrt{2}}
+( \ket{01} + i \ket{10})
+=
+\ket{01}
+with \ probability \ 1 
+\end{equation}
+
+\begin{equation}
+\label{145}
+both \ defect:
+U^{\dagger}
+\frac{1}{\sqrt{2}}
+( \ket{11} + i \ket{00})
+=
+\ket{11}
+with \ probability \ 1 .
+\end{equation}
+
+これらは、表6の4つの古典的な結果に対応しており、古典的なゲームが囚人のジレンマに含まれていることを示しています。
+
+それでは、アリスとボブによるあまり伝統的ではない量子運動について考えてみましょう。 たとえば、アリスが$\mathbf{1}$をプレイし、ボブがアダマール行列$H$をプレイするとします。
+
+\begin{equation}
+\label{146}
+( \mathbf{1} \otimes H ) U \ket{00}
+=
+\frac{1}{2}
+\ket{0}( \ket{0} +  \ket{1}) 
++ \frac{i}{2} \ket{1} (\ket{0} - \ket{1})
+=
+\frac{1}{2}
+[\ket{00} +  \ket{01} 
+i \ket{10} - i \ket{11})].
+\end{equation}
+
+次に、$U^{\dagger}$を最後の方程式に適用すると、次のような最終状態が得られます。
+
+\begin{equation}
+\label{147}
+U^{\dagger}( \mathbf{1} \otimes H ) U \ket{00}
+=
+\frac{1}{\sqrt{2}}  (\ket{01} - i \ket{11}).
+\end{equation}
+
+
+以来$| \frac{1}{\sqrt{2}}|^2 = \frac{1}{2} $および$| \frac{-i}{\sqrt{2}}|^2 = \frac{1}{2} $で、後者の状態を測定すると、アリスに$0$のペイアウトまたは$1$のペイアウトが等しい確率で与えられるため、$\bar{\pi}_A = 0.5$、$\bar{\pi}_B = 3$になります。
+
+逆に、ボブが$\mathbf{1}$をプレイし、アリスがアダマール行列$H$をプレイするとします。
+
+\begin{equation}
+\label{148}
+(H \otimes  \mathbf{1}) U \ket{00}
+=
+\frac{1}{\sqrt{2}}  [\ket{00} + \ket{10} + i \ket{01} - i \ket{11} ].
+\end{equation}
+
+次に、$ U^{\dagger} $を最後の方程式に適用すると、逆プレイの最終状態が次のようになります。
+
+\begin{equation}
+\label{149}
+U^{\dagger} ( H \otimes  \mathbf{1}  ) U \ket{00}
+=
+\frac{1}{\sqrt{2}}  ( \ket{10} - i \ket{11} ).
+\end{equation}
+
+後者の状態を測定すると、アリスは$5$のペイアウトまたは$1$のペイアウトを同じ確率で与えるので、$\bar{\pi}_A =3, \bar{\pi}_B =0.5  $になります。
+
+検討したい残りのケースを要約します。
+
+\begin{equation}
+\label{150}
+(H \otimes  \sigma_x) U \ket{00}
+=
+\frac{1}{\sqrt{2}}  [\ket{01} + \ket{11} + i \ket{01} - i \ket{10} ]
+\end{equation}
+
+\begin{equation}
+\label{151}
+(\sigma_x \otimes H ) U \ket{00}
+=
+\frac{1}{\sqrt{2}}  [\ket{10} + \ket{11} + i \ket{01} - i \ket{01} ]
+\end{equation}
+
+\begin{equation}
+\label{152}
+(H \otimes H ) U \ket{00}
+=
+\frac{1}{\sqrt{2^3}}  [\ket{00} + \ket{10} + \ket{01}+ \ket{11} + i \ket{00} - i \ket{10} - i \ket{01} - i \ket{11} ],
+\end{equation}
+
+\begin{equation}
+\label{153}
+U^{\dagger}(H \otimes \sigma_x ) U \ket{00}
+=
+\frac{1}{\sqrt{2}}  [\ket{11}  - i \ket{10}], \bar{\pi}_A=3, \bar{\pi}_B=0.5
+\end{equation}
+
+\begin{equation}
+\label{154}
+U^{\dagger}(\sigma_x \otimes H) U \ket{00}
+=
+\frac{1}{\sqrt{2}}  [\ket{11}  - i \ket{01}], \bar{\pi}_A=0.5, \bar{\pi}_B=3
+\end{equation}
+
+
+\begin{equation}
+\label{155}
+U^{\dagger}(H \otimes H) U \ket{00}
+=
+\frac{1}{2}  [\ket{00}  +\ket{11} - i \ket{01}- i \ket{10}], \bar{\pi}_A= \bar{\pi}_B=2.25.
+\end{equation}
+
+「 $\succ$ 」は「優先される」ことを示します。 アリスはもはや好ましい戦略を持っていません。 
+$\sigma_x  \succ_A \mathbf{1}$ で、ボブが$\sigma_x$または$H$をプレイすると、$H \succ_A \sigma_x$になります。 これを表7に示します。 また、ペイオフ状態 \\
+
+
+\begin{table}[htb]
+\caption{σx、Hの量子移動が許可された囚人のジレンマ。}
+\centering
+\begin{tabular}{|r|r|r|r|} \hline
+ & Bob $\mathbf{1}$  & Bob $\sigma_x$ & Bob H \\ \hline
+Alice $\mathbf{1}$ & $(3,3)$ & $(0,5)$ & $(\frac{1}{2},3)$  \\
+Alice $\sigma_x$ & $(5,0)$ & $(1,1)$ & $(\frac{1}{2},3)$ \\ 
+Alice $H$ & $(3,\frac{1}{2})$ & $(3,\frac{1}{2})$ & $(2 \frac{1}{4},2 \frac{1}{4})$ \\ \hline
+\end{tabular}
+\end{table} 
+
+% 表VII: σx、Hの量子移動が許可された囚人のジレンマ。 \\
+
+$( \sigma_x, \sigma_x)$ に対応する $(1,1)$ は、もはやナッシュ均衡ではありません。
+ただし、$(H, H)$に対応する結果 $(2 \frac{1}{4},2 \frac{1}{4})$  は、パレート最適ではありませんが、ナッシュ均衡になります。 明らかに、量子移動を追加すると、ゲームの結果が変わります。
+
+パレート最適性を誘導するために、許可された動きのセットを拡張して、$S = {1, \sigma_x, H, \sigma_z}$のメンバーにしましょう。 結果を表8に示す。 結果$(21,21)$は、もはやナッシュ均衡ではありませんが、$(\sigma_z,\sigma_z)$に対応する$(3,3)$に新しいナッシュ均衡があります。 ペイオフは非平衡戦略ポイント$(1,1)$のペイオフと等しいため、共同で支配されることはありません。 このナッシュ均衡はパレート最適です。 囚人のジレンマの終わりです。
+
+
+ゲームの開始時と終了時に適用されるユニタリ行列Uの意味は何ですか？ それはまだ決定されていません。 時々それは第三者のプレーヤー、審判またはコーディネーターに帰せられます。 しかし、他の解釈もあります。 おそらく最良の方法は、「プレーヤーの協力者として機能し、ナッシュ均衡での見返りを最大化するのに役立つ」(参考文献10)とのことです。 これには囚人のジレンマの見えざる手？ より多くの作業が必要です。\\
+
+\begin{table}[htb]
+\caption{$\sigma_x , H, \sigma_z$の量子移動が許可された囚人のジレンマ。 動きに$(\sigma_z,\sigma_z)$対応する結果$(3,3)$は、ナッシュ均衡であるだけでなく、パレート最適でもあります。}
+\centering
+\begin{tabular}{|r|r|r|r|r|} \hline
+ & Bob $\mathbf{1}$  & Bob $\sigma_x$ & Bob H　& Bob $\sigma_z$  \\ \hline
+Alice $\mathbf{1}$ & $(3,3)$ & $(0,5)$ & $(\frac{1}{2},3)$ & $(1,1)$ \\
+Alice $\sigma_x$ & $(5,0)$ & $(1,1)$ & $(\frac{1}{2},3)$ & $(0,5)$  \\ 
+Alice $H$ & $(3,\frac{1}{2})$ & $(3,\frac{1}{2})$ & $(2 \frac{1}{4},2 \frac{1}{4})$ & $(1 \frac{1}{2},4)$\\ 
+Alice $\sigma_x$ & $(1,1)$ & $(5,0)$ & $(4,1 \frac{1}{2})$ & $(3,3)$  \\ \hline
+\end{tabular}
+\end{table} 
+
+% 表VII: $\sigma_x , H, \sigma_z$の量子移動が許可された囚人のジレンマ。 動きに$(\sigma_z,\sigma_z)$対応する結果$(3,3)$は、ナッシュ均衡であるだけでなく、パレート最適でもあります。
+
+

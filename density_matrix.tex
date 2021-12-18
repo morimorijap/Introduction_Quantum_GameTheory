@@ -1,0 +1,374 @@
+\section{The density matrix and quantum state estimation：密度行列と量子状態の推定}
+
+「量子複製不可能定理」は、次の種類の量子コピー機を禁止しています。
+コピーは1つの量子状態を入力として受け取り、同じ種類の2つのシステムを出力します。 量子複製不可能定理は、ニック・ハーバートが1982年にFoundations of Physicsで公開された超光速通信装置を提案した後にその名前が付けられました(参考文献30)。 これは広く注目を集め、議論の欠陥がすぐに発見されました：デバイスは量子クローニングを必要とし、量子状態の同一のコピーを生成することに問題がありました。 （さらなる背景は(参考文献56)にあります。）
+
+しかし、それだけではありません。 単一の測定でそれを行おうとしない限り、実質的に同一のコピーを準備することは問題ありません。 統計的手順により、入力状態を任意の精度で決定できます。 たとえば、未知の状態|ψ⟩の場合、
+
+\begin{equation}
+\label{234}
+\ket{\psi} = a \ket{0} + b \ket{1}
+\end{equation}
+
+計算ベースでn個のそのような準備された状態を繰り返し測定すると、$\ket{0} n_a$回と$\ket{1} n_b$回が得られます。ここで、$n_a + n_b = n$です。 その後、明らかに
+
+\begin{equation}
+\label{235}
+\frac{n_a}{n} 
+\simeq
+|a|^2
+=
+| \braket{\psi | 0} |^2
+\end{equation}
+
+
+\begin{equation}
+\label{236}
+\frac{n_b}{n} 
+\simeq
+|b|^2
+=
+| \braket{\psi | 0} |^2.
+\end{equation}
+
+つまり、$n$個の測定値は$(x_1, x_2, \cdots, x_n)$を生成します。ここで、各$x_i$は$0$または$1$のいずれかです。これは、尤度関数が
+
+\begin{equation}
+\label{237}
+L(p) 
+=
+\prod_{i=1}^n p^{x_i} q^{1-x_i}
+=
+p^{\sum x_i} q^{n - \sum x_i} .
+\end{equation}
+
+ここで、$p$は$1$の確率であり、$q = 1 − p$は$0$の確率です。$L(p)$を最大化すると、$p$の推定値は次のようになります。
+
+\begin{equation}
+\label{237}
+\hat{p}
+=
+\frac{1}{n} \sum x_i
+=
+\frac{n_b}{n} .
+\end{equation}
+
+これにより、統計ベースの密度行列$\rho$が得られます。
+
+
+
+\begin{equation}
+\label{239}
+\rho
+=
+\left( \begin{array}{cc}
+\frac{n_a}{n} & 0  \\
+0 & \frac{n_b}{n}
+\end{array} \right)
+=
+\frac{n_a}{n}
+\left( \begin{array}{cc}
+1 & 0  \\
+0 & 1
+\end{array} \right)
++
+\frac{n_b}{n}
+\left( \begin{array}{cc}
+0 & 1  \\
+1 & 0
+\end{array} \right)
+=
+\frac{n_a}{n} \ket{0} \bra{0}
++
+\frac{n_b}{n} \ket{1} \bra{1}.
+\end{equation}
+
+統計的な観点から、量子状態は、この方法で収集できるすべてのデータの数学的エンコーディングです。
+
+先に進む前に、純粋状態と混合状態の違いを説明する必要があります。
+量子状態$\ket{\psi}$が他の量子状態の凸結合である場合、それは混合状態にあると言われます。
+混合には、振幅ではなく、古典的な確率または組み合わせが含まれることに注意してください。
+  しかし、状態$\ket{\psi}$が他の状態の凸結合として表現できない場合、それは純粋な状態であると言われます。
+純粋な状態は、凸状態のセットの極値です。
+
+純粋な$\ket{\phi}$状態の場合、ケットブラ$\ket{\phi} \bra{\phi}$ 射影演算子と呼ばれます。 $\ket{\phi}$をそれ自体に投影し$(\ket{\phi} \braket{\phi | \phi} = \ket{\phi}) $となり、$\ket{\phi}$に直交する任意の状態$\ket{\theta}$を$ 0 ( \ket{\phi} \braket{\phi | \theta} =0)$に投影します。 
+純粋な状態$ \phi$の場合、密度行列は単純に $ \rho = \ket{\phi} \bra{\phi}$です。 システムが確率$p_j$の極値点$ \phi_j $の1つにある混合状態の場合、密度行列$\rho$は、それぞれの確率で重み付けされたプロジェクターの合計として定義されます。
+
+\begin{equation}
+\label{240}
+\rho
+=
+\sum_j p_j \ket{\phi_j} \bra{\phi_j}.
+\end{equation}
+
+確率は非負であり、合計が1であるため、これは、$\rho$が正の半確定エルミート演算子（固有値は非負）であり、$\rho$のトレース（行列の対角要素の合計、つまり 固有値）は$1$に等しい。
+
+たとえば、純粋な状態$\ket{\psi}$を$\ket{\psi} = a \ket{0}+ b\ket{1}$とします。ここで、$a$と$b$は、それぞれの複素共役$a^*$と$b^*$を持つ複素数です。 次に、$\ket{\psi}$の密度行列$\rho$は次のようになります。
+
+\begin{equation}
+\label{241}
+\rho
+=
+\ket{\psi}\bra{\psi}
+=
+\left( \begin{array}{cc}
+aa* & ab*  \\
+ba* & bb*
+\end{array} \right).
+\end{equation}
+
+a = 2、b = 1の場合、これは次のようになります。
+
+\begin{equation}
+\label{242}
+\rho
+=
+\ket{\psi}\bra{\psi}
+=
+\left( \begin{array}{cc}
+\frac{2}{3} & \frac{\sqrt{2}}{3}  \\
+\frac{\sqrt{2}}{3} & \frac{1}{3}
+\end{array} \right).
+\end{equation}
+
+計算ベースで$\ket{\psi}$を測定すると、確率$\frac{2}{3}$で|0⟩、または確率$\frac{1}{3}$で$\ket{1}$が得られます。
+
+これらの確率は、$\rho$のトレースにあります。 $\rho$を$\rho = \frac{2}{3} \ket{0}\bra{0} + \frac{1}{3} \ket{1}\bra{1}$と書き直すと、 非対角要素の情報が失われる可能性があります。（これは、クローン作成中に発生することです。）
+測定後、確率$1$で $\ket{\psi} = \ket{0}$、または確率$1$で$\ket{\psi} = \ket{1}$のいずれかであることに注意してください。
+
+別の例として、状態のアンサンブル内の$\frac{3}{4}$つの状態が状態$ \ket{\psi}_1 =.8 \ket{0} + .6 \ket{1} $で準備され、$\frac{1}{4}$が状態$ \ket{\psi}_2 = .6 \ket{0} - .8i \ket{1}$で準備されると仮定します。
+
+次に、式（240）を使用した、この混合アンサンブルの密度行列は次のようになります。
+
+\begin{equation}
+\label{243}
+\rho
+=
+.75 \ket{\psi_1}\bra{\psi_1}
++ .25 \ket{\psi_2}\bra{\psi_2}
+=
+\left( \begin{array}{cc}
+.57 & .36+12i  \\
+.36-12i & .43
+\end{array} \right).
+\end{equation}
+
+このセットから引き出され、$( \ket{0}, \ket{1})$ベースで測定された粒子は、確率$.57$の状態$\ket{0}$または確率$.43$の状態$\ket{1}$で検出されます。
+ただし、$\rho$を使用して別の基準の確率を見つけたい場合は、トレースだけでなく、対角外の要素も必要になります。
+これを確認するために、同じアンサンブルから粒子を描画し、正規直交基底$( \ket{\phi_1}, \ket{\phi_2})$で測定を行うと仮定します。ここで、$\ket{\phi_1} = .6 \ket{0} + .8\ket{1}$および$\ket{\phi_2} = .8 \ket{0} + .6\ket{1}$です。
+ここで、$\braket{\phi_1 | \phi_2} = 0 $および $ | \braket{\phi_1 | \psi_1} |^2 =  | \braket{\phi_2 | \phi_2} |^2 = 1 $ であることに注意してください。次に、$\rho$は観測の確率$P$として$\ket{\phi_1}$ および$\ket{\phi_2}$を与えます。
+
+\begin{equation}
+\label{244}
+P(\ket{\phi_1})
+=
+(.6, .8) \rho
+\left( \begin{array}{c}
+.6  \\
+.8
+\end{array} \right)
+=.826
+\end{equation}
+
+\begin{equation}
+\label{245}
+P(\ket{\phi_2})
+=
+(.8, -.6) \rho
+\left( \begin{array}{c}
+.8  \\
+-.6
+\end{array} \right)
+=.174.
+\end{equation}
+
+
+電子のスピン状態など、観測可能な$\aleph$選択するとします。
+次に、量子測定のフォンノイマン定式化では、各オブザーバブルはエルミート演算子$A$に関連付けられ、$A \ket{\psi_j} = a_j \ket{\psi_j} $です。ここで、$\ket{\psi_j}$は$A$の固有ベクトルであり、$a_j$は固有値です。
+したがって、$\rho$ と$A$に同じ基底、つまり$A$の固有ベクトルを使用すると、次のようになります。
+
+\begin{equation}
+\label{246}
+A \rho = \sum_j p_j A \ket{\psi_j} \bra{\psi_j}
+=
+\sum_j p_j a_j \ket{\psi_j} \bra{\psi_j}.
+\end{equation}
+
+これで、Aの期待値Aは単純になります。
+
+\begin{equation}
+\label{247}
+\bar{A}  = \sum_j p_j a_j.
+\end{equation}
+
+したがって、後者は次のように表すことができます。
+
+\begin{equation}
+\label{248}
+\bar{A}  = trace(A \rho).
+\end{equation}
+
+密度行列$\rho$を介した量子状態推定には多くのアプローチがあります。
+状態推定の問題は、クローンの問題と密接に関連しており、エンタングルメントの問題に関連しています。
+以前に検討した最尤法がおそらく最良です。 このエッセイのヒューリスティックな目的のために、ベイジアンフレームワーク(参考文献63)が明らかになっています。
+
+私たちは無関心、または不十分な理由の原則から始めて、密度が密度であるという最初の仮定をするかもしれません
+行列は完全に混合された形式です（$\mathbf{H}_2$のシステムの場合）。
+
+\begin{equation}
+\label{249}
+\rho  = \frac{1}{2} \mathbf{1} =
+\left( \begin{array}{cc}
+\frac{1}{2} & 0 \\
+0 & \frac{1}{2}
+\end{array} \right).
+\end{equation}
+
+これはアンサンブルに対応し、その半分はアップ状態で、半分はダウン状態です。
+
+\begin{equation}
+\label{250}
+\rho  
+= 
+\frac{1}{2} \ket{u} \bra{u} +\frac{1}{2} \ket{d} \bra{d} 
+=
+\frac{1}{2}
+\left( \begin{array}{c}
+1  \\
+0 
+\end{array} \right)
+\left( \begin{array}{cc}
+1  & 0 
+\end{array} \right)
++
+\frac{1}{2}
+\left( \begin{array}{c}
+0  \\
+1 
+\end{array} \right)
+\left( \begin{array}{cc}
+0 & 1 
+\end{array} \right)
+=
+\frac{1}{2}
+\left( \begin{array}{cc}
+1 & 0 \\
+0 & 0
+\end{array} \right)
++
+\frac{1}{2}
+\left( \begin{array}{cc}
+0 & 0 \\
+0 & 1
+\end{array} \right)
+=
+\frac{1}{2} \mathbf{1}.
+\end{equation}
+
+または、密度行列の一般的な形式から始めることもできます。これは、パウリスピン行列と実数$r_x, r_y$および$r_z$で次のように記述できます。
+
+\begin{equation}
+\label{251}
+\rho  
+= 
+\frac{1}{2} (\mathbf{1} + \mathbf{r} \cdot \sigma)
+\end{equation}
+
+\begin{equation}
+\label{252}
+= 
+\frac{1}{2} (\mathbf{1} + r_x  \sigma_x + r_y  \sigma_y + r_z \sigma_z)
+\end{equation}
+
+\begin{equation}
+\label{253}
+= 
+\frac{1}{2} 
+\left( \begin{array}{cc}
+1 + r_z & r_x -i r_y \\
+r_x + i r_y & 1 - r_z
+\end{array} \right).
+\end{equation}
+
+ここでは、$\rho$の行列式が非負である必要があります。$\mathbf{det} \rho \ge 0$は、
+$\frac{1}{4} [  1-( r_x^2 + r_y^2 + r_z^2 ) ] \ge 0 $ を意味します。または、$ \mathbf{r}^2 =  r_x^2 + r_y^2 + r_z^2 $です。
+そのため、各密度行列は、ブロッホ球と呼ばれる半径$1$のボールに関連付けることができます。
+ボールの表面上の点は純粋な状態に対応し、内部の点は混合状態に対応します。
+
+この形式の密度行列$\rho$を仮定し、$z$方向のスピンを測定して、周波数$n_u$および$n_d$で一連の$n$個の結果$u$および$d$を取得すると、次のようになります。
+
+
+\begin{equation}
+\label{254}
+L(n_u)
+= 
+[ \frac{1}{2} (1 + r_z)^{\frac{n_u}{n}}]
+[ \frac{1}{2} (1 - r_z)^{\frac{n - n_u}{n}} ]
+\end{equation}
+
+ここで、次の状態識別ゲーム$\Gamma_{sd}$について考えてみます。 $N$個の状態があり、
+集合$S = \{ \ket{\psi_j}, j=0,1, \cdots , N-1 \}$のメンバーです。
+これらの各状態は、密度行列$ \rho_j = \eta_j \ket{\psi_j} \bra{\psi_j}$ で表されます。
+アリスは、ボブに知られていない状態$\rho_k$を準備し、関連付けられた$\ket{\psi_k}$が$S$のメンバーであるという情報とともに、それをボブに転送します。
+彼女はまた、$S$の各状態の確率$\eta_j$を彼に伝えます。
+
+$\eta_j$ は事前確率と呼ばれます。 もちろん、これはすぐにベイジアンフレームワークを示唆するので、量子仮説検定と呼ばれるベイジアン戦略を考えてみましょう(参考文献9)。
+
+$N$個の状態があるため、ボブは$N$個の結果を与える手順に従います。これを$a_j$とラベル付けします。
+ボブが結果を取得した場合、彼は送信された状態が$\rho_m$であると想定します。
+$\rho_m \ne \rho_k$であるエラー確率$p_E$と、$\rho_m = \rho_k $である確率$1- p_E = p_D$があります。
+
+ゲームの説明を完了するには、$\rho_k$が送信された場合にボブが見つける確率を表すチャネル行列$[h(a_m  \rho_k）]$ と、作成にコストを割り当てるコスト行列$[c_{mk}]$を定義する必要があります。 仮説は、$\rho_k$が送信されたときです。
+
+送信された$rho_k$に関係なく、ボブの測定値は午前の1つを生成します。 これにより、次のような完全性条件が生じます。
+
+\begin{equation}
+\label{255}
+\sum_{m=1}^{N} h(a_m|\rho_k) = 1.
+\end{equation}
+
+その場合、合計エラー確率は次のようになります。
+
+\begin{equation}
+\label{256}
+p_E
+=
+1-\sum_{k=1}^{N} \eta_k c_{mk} h(a_m|\rho_k) .
+\end{equation}
+
+ボブがアリスに支払う平均金額$c_B$は、ベイジアンコストマトリックスによって与えられます
+
+\begin{equation}
+\label{257}
+c_B
+=
+\sum_{mk} \eta_k c_{mk} h(a_m|\rho_k) .
+\end{equation}
+
+ボブの目標は、$c_B$を最小化することです。 ボブが制御するのは、チャネル行列$h$の要素だけです。 したがって、ボブの問題は
+
+\begin{equation}
+\label{258}
+\min_{\mathbf{h}}
+\sum_{mk} \eta_k c_{mk} h(a_m|\rho_k) .
+\end{equation}
+
+これにより、ゲーム理論のコンテキストで量子状態の識別（特定の状態のセットから状態を見つける）が行われます。
+コスト行列の対角要素を0に設定し（ボブは正しいことに対して何も支払わない）、他の要素を定数cに等しく設定すると（すべてのエラーのコストは同じ）、式（256）と（257）を比較すると、ボブは 問題はに減少します
+
+\begin{equation}
+\label{259}
+\min _{\mathbf{h}} p_E.
+\end{equation}
+
+ここでの状態の数は有限です。 対照的に、量子状態の推定では、状態のセットは無限大です。
+量子状態自体は観測できないので、量子状態推定とは、すでに見てきたように、量子状態の密度行列$\rho$を推定することを意味します。
+これもまた、ゲーム理論の文脈に置くことができます。
+
+状態推定ゲーム(参考文献38)では、アリスは任意の純粋な状態$\ket{\psi} \in \mathbf{H}_d$を選択し、
+$\ket{\psi}^{\otimes N}$をボブに送信し、$\ket{\psi}$を審判に送信します。
+アリスから$N$状態を受け取った後、ボブはそれらの測定を実行し、純粋な状態$\ket{\psi}$を審判に送信します。
+ボブとアリスから2つの状態を受け取った後、審判はいくつかの基準に従ってそれらを比較し（以下のクローン作成を参照）、2つの状態が十分に接近していない場合はアリスに、接近している場合はボブに報酬を与えます。
+もちろん、ボブの仕事は、アリスから受け取った$N$個の状態を与えることができる最高の量子状態測定を構築することです。
+
+

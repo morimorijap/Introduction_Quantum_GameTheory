@@ -1,0 +1,174 @@
+\section{Shor’s factoring algorithm：ショアの素因数分解アルゴリズム}
+
+ショアのアルゴリズムは量子計算の重要な結果であるため、少し詳しく見ていきたいと思います。 それはRSAゲームの基礎を形成します。 予備として、オイラーの定理と量子フーリエ変換Fが必要になります。 
+
+\textbf{Euler′s theorem　オイラーの定理}。
+$N$を整数とし、$a$を$N$未満の整数とし、$N$と互いに素とします。オイラーの定理（参考文献54、12章)はそれを言います。
+
+\begin{equation}
+\label{102}
+a^\phi = 1 \mod N.
+\end{equation}
+
+ここで、$\phi$ はオイラーのトーティエント関数であり、比較的素数$N$である$N$未満の整数の総数です。 例：$N = 77$とします。 この場合、$\phi= 60$であるため、$23^{60} = 1 \mod 77, 39^{60} = 1 \mod 77$などです。オイラーの定理は、任意の数の累乗が$N$サイクルの$\mod N$に対して互いに素であることを意味します。
+
+\begin{equation}
+\label{103}
+a, a^2, a^3, \cdots, a^{\phi -1}, a^\phi = 1, a, a^2, a^3, \cdots.
+\end{equation}
+
+したがって、$\phi$はサイクルまたは期間の最大長です。 もちろん、与えられた$a$に対して、$a^\phi = 1 \mod N$のように小さい$s < \phi $が存在する可能性があります。しかし、その場合、$s$が$\phi$を除算することは明らかです。 $a^s = 1 \mod N$のような$s$の最小値は、$a$の次数と呼ばれます。これは、以下のショアのアルゴリズムでは、$r$で表されます。
+$\phi$、または与えられた$a$の任意の$s$または$r$の知識が与えられると、$N$を因数分解できます.$a^\phi = 1 \mod N$なので、$\phi$に対しても$ ( a^{\frac{\phi}{2}} +1)( a^{\frac{\phi}{2}} -1) = 0 \mod N$となります。 $gcd（x,y）$は、$x$と$y$の最大公約数を示します。
+次に、$gcd（N, a^{\frac{\phi}{2}} +1）$と$gcd（N, a^{\frac{\phi}{2}} -1）$の因子をチェックします。 要因がわからない場合は、$\phi$を再度2で除算するか（前の除算で偶数の指数が残っている場合）、別の値aを試します。 
+例：$N = 77$と $a = 2$とします。 $2^{60} = 1 \mod 77$であり、$\phi$を$2$で除算すると、$2^{30} = 1 \mod 77$であることがわかります。したがって、$2^{15} \mod N = 43$を調べます。 $gcd(77,44)= 11$および$gcd(77,42)= 7$であることがわかります。これらは77の2つの因数分解です。明らかに、これは通常、数を因数分解する最良の方法ではありませんが、量子アルゴリズムに理想的に適しています。
+
+\textbf{Quantum Fourier transform. 量子フーリエ変換}
+量子フーリエ変換は、離散フーリエ変換によく似ています。 与えられた状態に対して$\ket{y}$は、量子フーリエ変換はユニタリ変換です
+
+\begin{equation}
+\label{104}
+F \ket{y}
+=
+\frac{1}{\sqrt{2^n}}
+\sum_{x=0}^{2^n -1}
+e^{2 \pi i xy / 2^n} \ket{x}.
+\end{equation}
+
+この定義では、用語$xy$は通常の乗算を示します。 これは、ビット内積$x \cdot y$ではありません。 むしろ、$\ket{x}= 7$および$ \ket{y} = 6$の場合、$xy = 42$です。
+（対照的に、内積は$x \cdot y = 7 \cdot 6 \mod 2 = 111 \cdot 110 \mod 2 = 2 \mod 2 = 0$です。）
+$F \ket{y}$は、期間$2^n$で$xy$の周期的です。 前に見たアダマール行列$H$は、単に$n = 1$のフーリエ変換です。これを確認するには、項の$x,y$をそれぞれ$0$または$1$とします。 
+
+\begin{equation}
+\label{105}
+\frac{1}{\sqrt{2^n}}
+e^{2 \pi i xy / 2^n} 
+\end{equation}
+
+ここで、n = 1の場合。以下の行列を取得します。
+
+\begin{equation}
+\label{106}
+\frac{1}{\sqrt{2}}
+\left( \begin{array}{cc}
+ e^0 & e^0 \\
+ e^0 & e^{\pi i}
+\end{array} \right) 
+=
+\frac{1}{\sqrt{2}}
+\left( \begin{array}{cc}
+ 1 & 1 \\
+ 1 & -1
+\end{array} \right),
+\end{equation}
+
+ここで、$e^{\pi i} = \cos(\pi) + i \sin (\pi) = -1 + 0 = -1. $　を思い出してください。
+
+逆量子フーリエ変換F-1は、iの符号を単純に反転します。
+
+\begin{equation}
+\label{107}
+F^{-1} \ket{y}
+=
+\frac{1}{\sqrt{2^n}}
+\sum_{x=0}^{2^n -1}
+e^{- 2 \pi i xy / 2^n} \ket{x}.
+\end{equation}
+
+
+\textbf{Shor′s factoring algorithm. ショアの因数分解アルゴリズム}
+$2^{2n-2}  < N^2 < 2^{2n}$である数$N$の因数を見つけたいと思います。
+量子コンピューター上のショアの因数分解アルゴリズムは、$O (( \log N)^3)$ステップで実行されます。
+2つのレジスタを備えた量子コンピュータが必要です（これを単に左と右と呼びます）。
+左側のレジスタには$2n$キュービットが含まれ、右側のレジスタには$log_2 N$キュービットが含まれます。 両方のレジスタのキュービットの値は$\ket{0}$に初期化されます。
+
+\begin{equation}
+\label{108}
+\ket{00 \cdot 0} \otimes \ket{00 \cdot 0}.
+\end{equation}
+
+ステップ1： $m, 2 \le  m \le N-2$を選択します。 $gcd(m,N) \ge 2$の場合、$N$の適切な因数が見つかりました。それ以外の場合は、手順2〜5で次のように進めます。
+
+ステップ2：左レジスタのキュービットのWalshtransフォーム$W_2^{2n}$を実行して、左レジスタのすべての状態の重ね合わせを作成します。
+
+\begin{equation}
+\label{109}
+( W_2^{2n} \otimes \mathbf{1}_{log_2 N} )
+( \ket{00 \cdot 0} \otimes \ket{00 \cdot 0} )
+=
+\ket{\psi_s} \otimes \ket{00 \cdots 0}
+=
+\frac{1}{\sqrt{2^{2n}}}
+\sum_{x=0}^{2^{2n-1}}
+\ket{x} \otimes \ket{00 \cdots 0}.
+\end{equation}
+
+ステップ3：変換$f_m( \ket{x} \otimes \ket{00 \cdots 0}) \to \ket{x} \otimes \ket{m^x \mod N} $を適用します。
+
+\begin{equation}
+\label{110}
+f_m ( \ket{\psi_s} \otimes  \ket{00 \cdot 0} \otimes \ket{00 \cdot 0} )
+=
+\frac{1}{\sqrt{2^{2n}}}
+\sum_{x=0}^{2^{2n-1}}
+\ket{x} \otimes \ket{m^x \mod N}.
+\end{equation}
+
+この時点で、正しいレジスタを測定したり、デコヒーレンスを許可したりすると、崩壊することに注意してください。
+$Z = m^z \mod N$などの$m^x \mod N$の特定の値に変換します。したがって、左側のレジスタでは、$m^x \mod N = Z$となるような状態$x$を除いて、状態のすべての振幅がゼロになります。
+たとえば、$m$の次数が$5$の場合、状態の振幅は次のようになります。
+  
+\begin{equation}
+\label{111}
+\cdots ,0,0,0,c,0,0,0,0,c,0,0,0,0,c,0,0,0,0,c,0,0 \cdots
+\end{equation}
+
+振幅は、5番目の値ごとにゼロ以外になります。 状態は、以前は振幅$\frac{1}{\sqrt{2^{2n}}} $と等しい重ね合わせでしたが、生き残った値の振幅は約$c = \frac{1}{\sqrt{\frac{2^{2n}}{5}}} $になります。
+これはアイデアですが、（Shorに続いて）この時点では実際には正しいレジスタを観察していません。 代わりに、ステップ4に進みます。
+
+ステップ4：左側のレジスタのキュービットに対して量子フーリエ変換Fを実行します。
+
+\begin{equation}
+\label{112}
+(F \otimes \mathbf{1} )(f_m ( \ket{\psi_s} \otimes  \ket{00 \cdot 0} \otimes \ket{00 \cdot 0} ))
+=
+\frac{1}{\sqrt{2^{2n}}}
+\sum_{x=0}^{2^{2n-1}}
+\sum_{y=0}^{2^{2n-1}}
+e^{2 \pi i xy / 2^{2n}}
+\ket{y} \otimes \ket{m^x \mod N}.
+\end{equation}
+
+ステップ5：システムレジスタを観察します。 これにより、$y$の場合は$w$の具体的な値が、$m^x \mod N$の場合は$m^z \mod N$が得られます。
+
+\begin{equation}
+\label{113}
+(F \otimes \mathbf{1} )(f_m ( \ket{\psi_s} \otimes  \ket{00 \cdot 0} \otimes \ket{00 \cdot 0} ))
+\to
+\ket{w, m^z \mod N} 
+\end{equation}
+
+関連する振幅の2乗に等しい確率で：
+
+\begin{equation}
+\label{114}
+| \frac{1}{2^{2n}}
+\sum_{x: m^x = m^z \mod N}
+e^{2 \pi i xy / 2^{2n}}|^2.
+\end{equation}
+
+したがって、高い確率で、観測された$w$は$\frac{2^{2n}}{r}$の整数倍に近くなります。 これで計算の量子部分は終了です。 ここで、結果を使用して期間$r$を決定します。
+
+まず、分母$r' < N < 2n$で$w$を最もよく近似する分数を見つけます。
+\begin{equation}
+\label{114}
+| \frac{w}{2^{2n}} - \frac{d'}{r'}
+<
+ \frac{1}{2^{2n+1}} |
+\end{equation}
+
+ これは、連分数を使用して行うことができます（参考文献29、第12章を参照）。
+ 
+ 次に、$r$の役割で$r'$を試してください。 もし、$mr '= 1 mod N$の場合、$r', (m^{\frac{m'}{2}} -1)(m^{\frac{m'}{2}} +1)$に対しても、
+$gcd(N,m^{\frac{r'}{2}}-1）$と$gcd(Z,m^{\frac{r'}{2}}-1）$の係数$N$をチェックします。
+
+$r'$が奇数の場合、または$r'$が偶数で係数が得られない場合は、$m$に同じ値を使用してステップ$O (\log \log N)$回繰り返します。 それでも問題が解決しない場合は、$m$を変更して最初からやり直します。
