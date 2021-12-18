@@ -3,6 +3,9 @@
 
 「量子ゲーム理論」一緒に勉強しよう。
 
+これはQiitaの「量子コンピューター Advent Calendar 2021」に12/18に投稿しています。
+https://qiita.com/advent-calendar/2021/quantum
+
 昨年2020年のQiitaのアドベントカレンダーで、
 「量子とゲーム理論」の初歩　
 https://qiita.com/morimorijap/items/360520b04035a7a1cc5e
@@ -10,12 +13,12 @@ https://qiita.com/morimorijap/items/360520b04035a7a1cc5e
 
 そのときに、参考にした、
 J. Orlin Grabbe著「An Introduction to Quantum Game Theory」arXiv:quant-ph/0506219v1 ,27/Jun/2005　
+https://arxiv.org/abs/quant-ph/0506219
 が量子とゲーム理論について、基本的な内容を６９ページあって網羅的に書いてあることを発見しました。英語で量子とゲーム理論をちゃんと勉強したくて自分のメモ的に日本語訳しました。　
 
-IntroductionQuantumGameTheory.pdf をダウンロードしてください。
+IntroductionQuantumGameTheory.pdf をgithub上でみると日本語が見えないので、ダウンロードしてみてください。
 https://github.com/morimorijap/Introduction_Quantum_GameTheory/blob/main/IntroductionQuantumGameTheory.pdf
-
-TeXファイルも公開しており、CloudTexにてコンパイルしています。
+（TeXファイルは、CloudTexにてコンパイルしています）
 
 多々細かい部分が、本当にこれで間違ってないのか、わかりにくく無いかなど気になっています。
 
