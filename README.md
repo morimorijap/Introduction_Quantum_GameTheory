@@ -26,13 +26,13 @@ https://github.com/morimorijap/Introduction_Quantum_GameTheory/blob/main/Introdu
 
 そこで、この文章を公開して、「量子ゲーム理論」に興味があり、一緒に勉強してくれる人を募集したいと思います。
 
-J. Orlin Grabbe著「An Introduction to Quantum Game Theory」とともに、
+J. Orlin Grabbe著「An Introduction to Quantum Game Theory」とともに、Chris Bernhardt 著、湊 、中田 訳の「みんなの量子コンピュータ」や、岡田章著「ゲーム理論 （第３版）」、中山 幹夫著「はじめてのゲーム理論」なども参考にしながら進めていきたいとおもっています。
 
 やり方はオンライン読書会しようかとおもいますので、
 http://morimori.com/
 の下にあるソーシャルメディア、Emailなどから連絡ください。
 
-Chris Bernhardt 著、湊 、中田 訳の「みんなの量子コンピュータ」や、岡田章著「ゲーム理論 （第３版）」、中山 幹夫著「はじめてのゲーム理論」なども参考にしながら進めていきたいとおもっています。
+
 
 
 P.S.
