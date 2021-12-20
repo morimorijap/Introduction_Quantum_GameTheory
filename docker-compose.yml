@@ -1,11 +1,11 @@
 version: '3.2'
 services:
   iqgt-pdf-compile:
-    image: iqgt:latest
+    image: ghcr.io/morimorijap/iqgt:latest
     build:
       context: .
       dockerfile: ./docker/Dockerfile
       cache_from:
-        - iqgt:latest
+        - ghcr.io/morimorijap/iqgt:latest
     volumes:
       - .:/workdir
