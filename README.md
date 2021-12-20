@@ -16,9 +16,10 @@ J. Orlin Grabbe著「An Introduction to Quantum Game Theory」arXiv:quant-ph/050
 https://arxiv.org/abs/quant-ph/0506219
 が量子とゲーム理論について、基本的な内容を６９ページあって網羅的に書いてあることを発見しました。英語で量子とゲーム理論をちゃんと勉強したくて自分のメモ的に日本語訳しました。　
 
-IntroductionQuantumGameTheory.pdf をgithub上でみると日本語が見えないので、ダウンロードしてみてください。
-https://github.com/morimorijap/Introduction_Quantum_GameTheory/blob/main/IntroductionQuantumGameTheory.pdf
-（TeXファイルは、CloudTexにてコンパイルしています）
+コンパイル済みのpdfファイルをgithub上でみると日本語が見えないので、ダウンロードしてみてください。
+https://github.com/morimorijap/Introduction_Quantum_GameTheory/blob/gh-pages/main.pdf
+~~（TeXファイルは、CloudTexにてコンパイルしています）~~
+@y-yuさんがGithub actionで自動コンパイルをしてくれました。
 
 多々細かい部分が、本当にこれで間違ってないのか、わかりにくく無いかなど気になっています。
 
