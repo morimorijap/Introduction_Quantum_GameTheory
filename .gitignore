@@ -1,0 +1,5 @@
+*.aux
+*.dvi
+main.pdf
+*.fdb_latexmk
+*.synctex.gz

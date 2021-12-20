@@ -1,0 +1,11 @@
+version: '3.2'
+services:
+  iqgt-pdf-compile:
+    image: iqgt:latest
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+      cache_from:
+        - iqgt:latest
+    volumes:
+      - .:/workdir
