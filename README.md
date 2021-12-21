@@ -1,6 +1,8 @@
 
 # IntroductionQuantumGameTheory
 
+[![CI](https://github.com/morimorijap/Introduction_Quantum_GameTheory/actions/workflows/ci.yml/badge.svg)](https://github.com/morimorijap/Introduction_Quantum_GameTheory/actions/workflows/ci.yml)
+
 「量子ゲーム理論」一緒に勉強しよう。
 
 これはQiitaの「量子コンピューター Advent Calendar 2021」に12/18に投稿しています。
@@ -17,7 +19,7 @@ https://arxiv.org/abs/quant-ph/0506219
 が量子とゲーム理論について、基本的な内容を６９ページあって網羅的に書いてあることを発見しました。英語で量子とゲーム理論をちゃんと勉強したくて自分のメモ的に日本語訳しました。　
 
 コンパイル済みのpdfファイルをgithub上でみると日本語が見えないので、ダウンロードしてみてください。
-https://github.com/morimorijap/Introduction_Quantum_GameTheory/blob/gh-pages/main.pdf
+https://morimorijap.github.io/Introduction_Quantum_GameTheory/main.pdf
 ~~（TeXファイルは、CloudTexにてコンパイルしています）~~
 @y-yuさんがGithub actionで自動コンパイルをしてくれました。
 
