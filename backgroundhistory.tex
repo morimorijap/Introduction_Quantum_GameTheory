@@ -27,10 +27,9 @@
 ハイゼンベルグの行列力学は本質的に$N \times N$の入出力行列$H$を含んでいて、物質の状態間遷移を表します。
 時間$t$で関心のあるシステムの状態を$\psi$で表す（今のところ$t$をゼロに設定します）と、$\psi$は$N \times 1$のベクトルで、ハイゼンベルグは固有ベクトル-固有値システムを使用していました。
 
-\begin{equation}
-\label{1}
-H \psi = E \psi
-\end{equation}
+\begin{align}
+H \psi = E \psi \label{eq:Eigenvector_equation}
+\end{align}
 
 ここで、Eはスカラーで、量子化されたエネルギーレベルを表します。
 N方程式のシステムが非縮退であると仮定し、$E$には$N$個の解があります。たとえば、$E_n, n = 1,2,...,N$です。
@@ -38,25 +37,24 @@ $E_N$は固有値、つまりエネルギー準位は、$\psi$の状態空間の
 
 翌年、エルヴィン・シュレーディンガーは、同じ現象の電磁的解釈を探して、彼の有名な波動方程式を発表しました
 
-\begin{equation}
-\label{2}
+\begin{align}
 i \hbar \frac{\partial \psi}{\partial t} 
 = \frac{- \hbar^2}{2m}
 \left(    
 \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial z^2}   
-\right) \psi + V \psi,
-\end{equation}
+\right) \psi + V \psi, \label{eq:Schroedinger_equation}
+\end{align}
 
 ここで、$ i = \sqrt{-1} $であり $\hbar$はプランクのエネルギー量$h$を$2 \pi$で割ったもので、
 $V$はポテンシャルエネルギーである。
 
 シュレーディンガーは彼のアプローチとハイゼンベルグの行列力学が数学的に同等であることを発見し、喜びました。
 この同等性の1つの形式は、$\frac{- \hbar^2}{2m} = H \psi$方程式によって示唆されています。
-もし、私たちが、式$(\ref{2})$のシュレーディンガー方程式の中に、$\psi = A exp^{(-i \frac{E}{\hbar}t)}$、そして、
+もし、私たちが、\autoref{eq:Schroedinger_equation}のシュレーディンガー方程式の中に、$\psi = A exp^{(-i \frac{E}{\hbar}t)}$、そして、
 $ H = \frac{- \hbar^2}{2m}
 \left(    
 \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial z^2}   
-\right) \psi + V $とした場合、$ E \psi = H \psi $を得ることができ、すなわち $(\ref{1})$のハイゼンベルグの式である。
+\right) \psi + V $とした場合、$ E \psi = H \psi $を得ることができ、すなわち\autoref{eq:Eigenvector_equation}のハイゼンベルグの式である。
 
 数年後、ジョン・フォン・ノイマンは、ハイゼンベルクに刺激され、量子力学への関心ができ、
 「量子力学はヒルベルト空間におけるエルミート演算子の微積分として形式化できること、そしてハイゼンベルグとシュロディンガーの理論はこの微積分の単なる特定の表現であることを示した。」 
